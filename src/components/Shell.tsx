@@ -6,7 +6,7 @@ import { useEffect, useRef, useState, type ReactNode } from "react";
 import {
   Home, BookOpen, Users, FileText, Newspaper, Video, GraduationCap, Bookmark, NotebookPen, Webcam,
   Download, Settings, LifeBuoy, Menu, X, Sun, Moon, Bell, Search, Shield, LayoutDashboard, HeartPulse, Target, LogOut,
-  Headphones,
+  Headphones, Smartphone, Share, Monitor, Check,
 } from "lucide-react";
 import { Logo, LogoMark } from "./Logo";
 import { cn, initials } from "@/lib/utils";
@@ -42,6 +42,47 @@ export function Shell({ user, unread, notifs, children }: { user: SessionUser; u
   const [unreadCount, setUnreadCount] = useState(unread);
   const [items, setItems] = useState<Notif[]>(notifs);
   const notifRef = useRef<HTMLDivElement>(null);
+
+  // PWA Install Prompt State
+  const [deferredPrompt, setDeferredPrompt] = useState<any>(null);
+  const [showInstallModal, setShowInstallModal] = useState(false);
+  const [isIOS, setIsIOS] = useState(false);
+  const [isStandalone, setIsStandalone] = useState(false);
+
+  useEffect(() => {
+    // Detect if running as standalone PWA
+    const standalone =
+      window.matchMedia("(display-mode: standalone)").matches ||
+      (window.navigator as any).standalone === true;
+    setIsStandalone(standalone);
+
+    const ua = window.navigator.userAgent.toLowerCase();
+    setIsIOS(/iphone|ipad|ipod/.test(ua));
+
+    const handleBeforeInstall = (e: Event) => {
+      e.preventDefault();
+      setDeferredPrompt(e);
+    };
+
+    window.addEventListener("beforeinstallprompt", handleBeforeInstall);
+    return () => window.removeEventListener("beforeinstallprompt", handleBeforeInstall);
+  }, []);
+
+  async function handleInstallClick() {
+    if (deferredPrompt) {
+      try {
+        deferredPrompt.prompt();
+        const choice = await deferredPrompt.userChoice;
+        if (choice && choice.outcome === "accepted") {
+          setDeferredPrompt(null);
+        }
+      } catch {
+        setShowInstallModal(true);
+      }
+    } else {
+      setShowInstallModal(true);
+    }
+  }
 
   useEffect(() => setUnreadCount(unread), [unread]);
   useEffect(() => setItems(notifs), [notifs]);
@@ -150,6 +191,21 @@ export function Shell({ user, unread, notifs, children }: { user: SessionUser; u
           </div>
         )}
       </div>
+      {!isStandalone && (
+        <div className="mx-3 mb-3">
+          <button
+            type="button"
+            onClick={() => {
+              setOpen(false);
+              handleInstallClick();
+            }}
+            className="flex w-full items-center justify-center gap-2 rounded-xl bg-primary/15 border border-primary/40 px-3 py-2 text-xs font-bold text-primary hover:bg-primary/25 transition shadow-sm"
+          >
+            <Smartphone className="h-4 w-4" />
+            <span>Baixar App</span>
+          </button>
+        </div>
+      )}
       <div className="mx-3 mb-3 rounded-2xl bg-accent p-3.5">
         <HeartPulse className="mb-2 h-5 w-5 text-primary" />
         <p className="text-xs font-bold text-foreground">Edital em primeiro lugar.</p>
@@ -182,17 +238,35 @@ export function Shell({ user, unread, notifs, children }: { user: SessionUser; u
       <div className="flex min-h-screen flex-col">
         <header className="sticky top-0 z-40 border-b border-border bg-background/80 backdrop-blur">
           <div className="flex h-14 items-center gap-2 px-4 sm:px-6">
-            <button className="btn-ghost p-2 lg:hidden" onClick={() => setOpen(true)} aria-label="Mostrar menu">
+            <button
+              type="button"
+              className="lg:!hidden inline-flex items-center justify-center rounded-xl p-2 text-foreground hover:bg-accent transition"
+              onClick={() => setOpen(true)}
+              aria-label="Mostrar menu"
+            >
               <Menu className="h-5 w-5" />
             </button>
-            <Link href="/overview" className="lg:hidden"><LogoMark size={28} /></Link>
+            <Link href="/overview" className="lg:!hidden">
+              <LogoMark size={28} />
+            </Link>
             <form action="/courses" className="ml-auto hidden items-center sm:flex">
               <div className="flex items-center gap-2 rounded-[0.75rem] border border-border bg-background px-3 h-9 w-56 focus-within:border-primary focus-within:ring-[3px]">
                 <Search className="h-4 w-4 shrink-0 text-muted-foreground" />
                 <input name="q" placeholder="Buscar matérias" className="flex-1 bg-transparent text-sm text-foreground outline-none placeholder:text-muted-foreground" />
               </div>
             </form>
-            <div ref={notifRef} className="relative ml-auto sm:ml-0">
+            {!isStandalone && (
+              <button
+                type="button"
+                onClick={handleInstallClick}
+                className="inline-flex items-center gap-1.5 rounded-xl border border-primary/40 bg-primary/10 px-2.5 py-1.5 text-xs font-semibold text-primary transition hover:bg-primary/20 active:scale-95 shrink-0 ml-auto sm:ml-0"
+                title="Baixar aplicativo no celular ou computador"
+              >
+                <Download className="h-3.5 w-3.5 shrink-0" />
+                <span className="text-[11px] font-bold">Baixar app</span>
+              </button>
+            )}
+            <div ref={notifRef} className="relative">
               <button
                 type="button"
                 className="btn-ghost relative p-2"
@@ -297,6 +371,80 @@ export function Shell({ user, unread, notifs, children }: { user: SessionUser; u
           })}
         </nav>
       </div>
+
+      {/* Modal com Instruções de Instalação do App */}
+      {showInstallModal && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/75 p-4 backdrop-blur-sm animate-in fade-in duration-200">
+          <div className="relative w-full max-w-md rounded-3xl border border-border bg-card p-6 shadow-2xl text-foreground">
+            <button
+              onClick={() => setShowInstallModal(false)}
+              className="btn-ghost absolute right-4 top-4 p-2 text-muted-foreground hover:text-foreground"
+              aria-label="Fechar"
+            >
+              <X className="h-5 w-5" />
+            </button>
+
+            <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-primary/15 text-primary border border-primary/30 mb-4">
+              <Download className="h-6 w-6" />
+            </div>
+
+            <h3 className="font-serif text-xl font-bold text-foreground">
+              Baixar e Instalar o App
+            </h3>
+            <p className="mt-1 text-xs text-muted-foreground">
+              Acesse a plataforma com 1 clique direto da sua tela inicial ou barra de tarefas.
+            </p>
+
+            <div className="mt-5 space-y-3 rounded-2xl border border-border bg-muted/40 p-4 text-xs leading-relaxed max-h-80 overflow-y-auto">
+              {/* Celular Android */}
+              <div className="space-y-1">
+                <p className="font-bold text-primary flex items-center gap-1.5">
+                  <Smartphone className="h-4 w-4" /> No Celular Android (Google Chrome):
+                </p>
+                <ol className="list-decimal pl-4 space-y-1 text-foreground/90">
+                  <li>Toque no menu de <strong>três pontinhos (⋮)</strong> no canto superior direito.</li>
+                  <li>Selecione <strong>&quot;Instalar aplicativo&quot;</strong> ou <strong>&quot;Adicionar à tela inicial&quot;</strong>.</li>
+                  <li>Confirme tocando em <strong>&quot;Instalar&quot;</strong>.</li>
+                </ol>
+              </div>
+
+              {/* iPhone / iPad */}
+              <div className="space-y-1 pt-2 border-t border-border/40">
+                <p className="font-bold text-primary flex items-center gap-1.5">
+                  <Share className="h-4 w-4" /> No iPhone ou iPad (Safari):
+                </p>
+                <ol className="list-decimal pl-4 space-y-1 text-foreground/90">
+                  <li>Toque no botão <strong>Compartilhar</strong> (quadrado com a seta para cima na barra inferior).</li>
+                  <li>Role as opções e toque em <strong>&quot;Adicionar à Tela de Início&quot;</strong>.</li>
+                  <li>Toque em <strong>&quot;Adicionar&quot;</strong> no canto superior direito.</li>
+                </ol>
+              </div>
+
+              {/* Computador / PC */}
+              <div className="space-y-1 pt-2 border-t border-border/40">
+                <p className="font-bold text-primary flex items-center gap-1.5">
+                  <Monitor className="h-4 w-4" /> No Computador (Chrome / Edge no Windows / Mac):
+                </p>
+                <ol className="list-decimal pl-4 space-y-1 text-foreground/90">
+                  <li>Na barra de endereços do navegador (onde fica o link), clique no ícone de <strong>instalar aplicativo</strong> (um monitorzinho com seta para baixo).</li>
+                  <li>Ou clique no menu de <strong>três pontinhos (⋮)</strong> &gt; <strong>&quot;Instalar Comunidade Saúde RCS&quot;</strong>.</li>
+                  <li>O aplicativo será adicionado à sua barra de tarefas e área de trabalho!</li>
+                </ol>
+              </div>
+            </div>
+
+            <div className="mt-6 flex justify-end">
+              <button
+                type="button"
+                onClick={() => setShowInstallModal(false)}
+                className="w-full rounded-xl bg-primary px-4 py-2.5 text-xs font-bold text-primary-foreground hover:brightness-110 transition shadow-sm"
+              >
+                Entendi
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
