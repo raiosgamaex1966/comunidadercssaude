@@ -10,6 +10,7 @@ import { PageHero } from "@/components/PageHero";
 import { cn, timeAgo } from "@/lib/utils";
 import { PROFESSIONS } from "@/lib/concursos";
 import { PostComments } from "./PostComments";
+import { CreatePostModal } from "./CreatePostModal";
 
 export const metadata = { title: "Comunidade" };
 const TOPICS = ["Geral", "Editais", "Rotina de estudos", "Português", "Raciocínio Lógico", "SUS", "Legislação", ...PROFESSIONS, "Avisos"];
@@ -45,22 +46,7 @@ export default async function CommunityPage({ searchParams }: { searchParams: Pr
       <PageHero title="Comunidade" lead="Troque dúvidas, estratégias de estudo e notícias de editais com outros concurseiros da saúde." />
       <div className="grid gap-6 lg:grid-cols-[1fr_300px]">
         <div>
-          <form action={createPost} className="card p-4">
-            <div className="flex gap-3">
-              <Avatar user={user} size={40} />
-              <div className="flex-1 space-y-2">
-                <textarea name="content" rows={3} required placeholder="Compartilhe uma dúvida, dica de estudo ou novidade de edital…" className="input resize-none" />
-                <div className="flex flex-wrap items-center gap-2">
-                  <select name="topic" className="input h-9 w-auto" defaultValue="Geral" title="Tema">
-                    {TOPICS.map((t) => <option key={t}>{t}</option>)}
-                  </select>
-                  <input name="imageUrl" placeholder="Link da imagem (https://…)" className="input h-9 flex-1" />
-                  <button className="btn-primary h-9">Publicar</button>
-                </div>
-                <p className="text-xs leading-relaxed text-muted-foreground">Escolha um tema para encontrar colegas da área. Respeite os colegas e não compartilhe material protegido por direitos autorais nem dados pessoais de terceiros.</p>
-              </div>
-            </div>
-          </form>
+          <CreatePostModal user={user} topics={TOPICS} />
 
           <div className="mt-4 flex flex-wrap items-center gap-2">
             <Link href="/community" className={cn("badge px-3 py-1", !feed && !tema ? "border-primary bg-primary/10 text-primary" : "text-muted-foreground")}>Todos</Link>

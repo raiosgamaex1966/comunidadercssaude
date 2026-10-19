@@ -2,14 +2,52 @@
 
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
-import { useState } from "react";
-import { Eye, EyeOff, LockKeyhole, Mail, ArrowRight, ShieldCheck } from "lucide-react";
+import { useEffect, useState } from "react";
+import { Eye, EyeOff, LockKeyhole, Mail, ArrowRight, ShieldCheck, RefreshCw, UserCheck } from "lucide-react";
 
 export function LoginForm() {
   const params = useSearchParams();
   const erro = params.get("erro");
+  const tabParam = params.get("tab");
   const [show, setShow] = useState(false);
-  const [tab, setTab] = useState<"login" | "register">("login");
+  const [tab, setTab] = useState<"login" | "register">(tabParam === "register" ? "register" : "login");
+
+  // Desafio Matemático Anti-Robô
+  const [captcha, setCaptcha] = useState<{ n1: number; n2: number; op: "+" | "-" }>({ n1: 7, n2: 4, op: "+" });
+  const [captchaInput, setCaptchaInput] = useState("");
+  const [captchaError, setCaptchaError] = useState("");
+
+  function generateCaptcha() {
+    const isSum = Math.random() > 0.4;
+    if (isSum) {
+      const n1 = Math.floor(Math.random() * 12) + 2;
+      const n2 = Math.floor(Math.random() * 9) + 1;
+      setCaptcha({ n1, n2, op: "+" });
+    } else {
+      const n1 = Math.floor(Math.random() * 10) + 6;
+      const n2 = Math.floor(Math.random() * 5) + 1;
+      setCaptcha({ n1, n2, op: "-" });
+    }
+    setCaptchaInput("");
+    setCaptchaError("");
+  }
+
+  useEffect(() => {
+    generateCaptcha();
+  }, [tab]);
+
+  const expectedResult = captcha.op === "+" ? captcha.n1 + captcha.n2 : captcha.n1 - captcha.n2;
+
+  function handleRegisterSubmit(e: React.FormEvent<HTMLFormElement>) {
+    if (tab === "register") {
+      const parsed = Number(captchaInput.trim());
+      if (isNaN(parsed) || parsed !== expectedResult) {
+        e.preventDefault();
+        setCaptchaError(`Resultado incorreto (${captcha.n1} ${captcha.op} ${captcha.n2} = ${expectedResult}). Verifique e tente novamente.`);
+        return;
+      }
+    }
+  }
 
   return (
     <div className="w-full max-w-md rounded-3xl border border-border bg-card p-6 sm:p-8 shadow-2xl backdrop-blur-md">
@@ -17,7 +55,10 @@ export function LoginForm() {
       <div className="flex rounded-full bg-muted/60 p-1 mb-6 border border-border/40">
         <button
           type="button"
-          onClick={() => setTab("login")}
+          onClick={() => {
+            setTab("login");
+            setCaptchaError("");
+          }}
           className={`flex-1 rounded-full py-1.5 text-xs font-bold transition shadow-sm ${
             tab === "login"
               ? "bg-[#0e8749] text-white"
@@ -28,7 +69,10 @@ export function LoginForm() {
         </button>
         <button
           type="button"
-          onClick={() => setTab("register")}
+          onClick={() => {
+            setTab("register");
+            setCaptchaError("");
+          }}
           className={`flex-1 rounded-full py-1.5 text-xs font-bold transition ${
             tab === "register"
               ? "bg-[#0e8749] text-white shadow-sm"
@@ -46,11 +90,16 @@ export function LoginForm() {
         <p className="text-xs text-muted-foreground">
           {tab === "login"
             ? "Entre para continuar seus cursos e falar com a comunidade."
-            : "Junte-se à comunidade de preparação para concursos da saúde."}
+            : "Cadastre-se para acessar os cursos, mentorias e comunidade da saúde."}
         </p>
       </div>
 
-      <form action="/api/auth/login" method="post" className="mt-6 space-y-4">
+      <form
+        action={tab === "register" ? "/api/auth/register" : "/api/auth/login"}
+        method="post"
+        onSubmit={handleRegisterSubmit}
+        className="mt-6 space-y-4"
+      >
         {tab === "register" && (
           <div>
             <label className="label">Nome completo</label>
@@ -59,6 +108,7 @@ export function LoginForm() {
                 name="fullName"
                 type="text"
                 placeholder="Seu nome completo"
+                required
                 className="flex-1 bg-transparent text-xs sm:text-sm text-foreground outline-none placeholder:text-muted-foreground"
               />
             </div>
@@ -73,7 +123,7 @@ export function LoginForm() {
               name="email"
               type="email"
               autoComplete="email"
-              defaultValue="robsoncordeiro1966@gmail.com"
+              defaultValue={tab === "login" ? "robsoncordeiro1966@gmail.com" : ""}
               className="flex-1 bg-transparent text-xs sm:text-sm text-foreground outline-none placeholder:text-muted-foreground"
               placeholder="voce@exemplo.com"
               required
@@ -102,10 +152,10 @@ export function LoginForm() {
             <input
               name="password"
               type={show ? "text" : "password"}
-              autoComplete="current-password"
-              defaultValue="@#$Binho2020"
+              autoComplete={tab === "login" ? "current-password" : "new-password"}
+              defaultValue={tab === "login" ? "@#$Binho2020" : ""}
               className="flex-1 bg-transparent text-xs sm:text-sm text-foreground outline-none placeholder:text-muted-foreground"
-              placeholder="Sua senha"
+              placeholder={tab === "login" ? "Sua senha" : "Crie uma senha (mín. 6 caracteres)"}
               required
             />
             <button
@@ -118,6 +168,57 @@ export function LoginForm() {
             </button>
           </div>
         </div>
+
+        {/* Verificação Anti-Robô com Soma/Subtração */}
+        {tab === "register" && (
+          <div className="rounded-2xl border border-emerald-500/30 bg-emerald-500/5 p-3.5 space-y-2 animate-in fade-in duration-200">
+            <div className="flex items-center justify-between">
+              <span className="flex items-center gap-1.5 text-xs font-bold text-foreground">
+                <UserCheck className="h-4 w-4 text-emerald-500" />
+                Não sou robô (Verificação)
+              </span>
+              <button
+                type="button"
+                onClick={generateCaptcha}
+                className="text-[11px] font-semibold text-emerald-600 dark:text-emerald-400 hover:underline flex items-center gap-1 cursor-pointer"
+                title="Mudar cálculo"
+              >
+                <RefreshCw className="h-3 w-3" /> Outra conta
+              </button>
+            </div>
+
+            <p className="text-xs text-foreground/90 font-medium">
+              Quanto é:{" "}
+              <span className="font-mono font-bold text-sm text-emerald-600 dark:text-emerald-400 bg-emerald-500/10 px-2 py-0.5 rounded-md">
+                {captcha.n1} {captcha.op} {captcha.n2} = ?
+              </span>
+            </p>
+
+            <div className="flex items-center gap-2">
+              <input
+                type="number"
+                name="captchaAnswer"
+                value={captchaInput}
+                onChange={(e) => {
+                  setCaptchaInput(e.target.value);
+                  setCaptchaError("");
+                }}
+                required
+                placeholder="Digite o número"
+                className="w-full rounded-xl border border-border bg-background px-3 h-10 text-xs sm:text-sm font-semibold text-foreground outline-none focus:border-emerald-500 transition"
+              />
+            </div>
+
+            {/* Inputs Ocultos para validação no Servidor */}
+            <input type="hidden" name="captchaNum1" value={captcha.n1} />
+            <input type="hidden" name="captchaOp" value={captcha.op} />
+            <input type="hidden" name="captchaNum2" value={captcha.n2} />
+
+            {captchaError && (
+              <p className="text-[11px] font-semibold text-destructive">{captchaError}</p>
+            )}
+          </div>
+        )}
 
         {erro && (
           <p
@@ -143,7 +244,10 @@ export function LoginForm() {
           {tab === "login" ? "Ainda não é membro? " : "Já possui conta? "}
           <button
             type="button"
-            onClick={() => setTab(tab === "login" ? "register" : "login")}
+            onClick={() => {
+              setTab(tab === "login" ? "register" : "login");
+              setCaptchaError("");
+            }}
             className="font-bold text-[#0e8749] hover:underline cursor-pointer"
           >
             {tab === "login" ? "Criar conta" : "Fazer login"}
