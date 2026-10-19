@@ -76,8 +76,12 @@ export function Shell({
   const [showInstallModal, setShowInstallModal] = useState(false);
   const [isIOS, setIsIOS] = useState(false);
   const [isStandalone, setIsStandalone] = useState(false);
+  const [mobilePreview, setMobilePreview] = useState(false);
+  const [isIframe, setIsIframe] = useState(false);
 
   useEffect(() => {
+    setIsIframe(typeof window !== "undefined" && window.self !== window.top);
+
     // Theme initialization
     const saved = localStorage.getItem("rcs-theme") as "dark" | "light" | null;
     const initialTheme = saved || "dark";
@@ -240,184 +244,231 @@ export function Shell({
   );
 
   return (
-    <div className="min-h-screen bg-background lg:grid lg:grid-cols-[250px_1fr]">
-      {/* Sidebar Desktop */}
-      <aside className="sticky top-0 hidden h-screen border-r border-border bg-card lg:block">{sidebar}</aside>
+    <>
+      {/* Modal Simulador iPhone para Administradores no Desktop */}
+      {mobilePreview && !isIframe && (
+        <div className="fixed inset-0 z-50 flex flex-col items-center justify-center bg-black/80 backdrop-blur-md p-4 animate-in fade-in duration-200">
+          <div className="w-full max-w-[390px] mb-3 flex items-center justify-between rounded-2xl bg-neutral-900 border border-neutral-700 px-4 py-2.5 text-xs text-neutral-200 shadow-2xl">
+            <div className="flex items-center gap-2">
+              <Smartphone className="h-4 w-4 text-emerald-400" />
+              <div>
+                <p className="font-bold text-white leading-tight">Simulador iPhone (390 x 844 px)</p>
+                <p className="text-[10px] text-neutral-400">Ambiente mobile 100% responsivo</p>
+              </div>
+            </div>
+            <button
+              type="button"
+              onClick={() => setMobilePreview(false)}
+              className="rounded-xl bg-neutral-800 hover:bg-neutral-700 px-3 py-1.5 text-xs font-bold text-neutral-200 hover:text-white transition cursor-pointer"
+            >
+              Fechar ✕
+            </button>
+          </div>
 
-      {/* Drawer Mobile */}
-      {open && (
-        <div className="fixed inset-0 z-50 lg:hidden">
-          <div className="absolute inset-0 bg-black/60 backdrop-blur-xs" onClick={() => setOpen(false)} />
-          <div className="absolute inset-y-0 left-0 w-[270px] bg-card shadow-2xl animate-in slide-in-from-left duration-200">
-            {sidebar}
+          {/* Moldura de Celular com Iframe real */}
+          <div className="w-[390px] h-[780px] max-h-[85vh] rounded-[48px] border-[10px] border-neutral-800 bg-card shadow-[0_25px_60px_-15px_rgba(0,0,0,0.9)] overflow-hidden relative flex flex-col">
+            <div className="absolute top-2.5 left-1/2 -translate-x-1/2 w-24 h-4 bg-neutral-800 rounded-full z-50 pointer-events-none" />
+            <iframe
+              src={pathname}
+              className="w-full h-full border-0 bg-background"
+              title="Simulador Mobile RCS"
+            />
           </div>
         </div>
       )}
 
-      {/* Main content area */}
-      <div className="flex min-h-screen flex-col bg-background">
-        <header className="sticky top-0 z-40 border-b border-border bg-background/90 backdrop-blur">
-          <div className="flex h-16 items-center justify-between gap-2 px-3 sm:px-6">
-            {/* Left: Hamburger + Brand on mobile */}
-            <div className="flex items-center gap-2 min-w-0">
-              <button
-                className="btn-ghost p-2 -ml-1 text-foreground lg:hidden shrink-0"
-                onClick={() => setOpen(true)}
-                aria-label="Mostrar menu"
-              >
-                <Menu className="h-5 w-5" />
-              </button>
-              <Link href="/overview" className="flex items-center gap-2 lg:hidden min-w-0">
-                <div className="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg bg-primary/20 text-primary font-bold text-xs">
-                  RCS
-                </div>
-                <span className="font-serif font-bold text-sm truncate max-w-[120px] sm:max-w-none text-foreground">
-                  Comunidade Saúde RCS
-                </span>
-              </Link>
-            </div>
+      <div className="min-h-screen bg-background lg:grid lg:grid-cols-[250px_1fr] overflow-x-hidden">
+        {/* Sidebar Desktop */}
+        <aside className="sticky top-0 hidden h-screen border-r border-border bg-card lg:block">{sidebar}</aside>
 
-            {/* Search with Ctrl K (desktop / tablet) */}
-            <form action="/courses" className="hidden flex-1 max-w-md sm:flex mx-2">
-              <div className="flex items-center gap-2 rounded-xl border border-border bg-card px-3 h-10 w-full focus-within:border-primary">
-                <Search className="h-4 w-4 shrink-0 text-muted-foreground" />
-                <input
-                  name="q"
-                  placeholder="Buscar aulas, mentorias, materiais..."
-                  className="flex-1 bg-transparent text-xs text-foreground outline-none placeholder:text-muted-foreground"
-                />
-                <span className="rounded border border-border/80 bg-muted px-1.5 py-0.5 text-[10px] font-semibold text-muted-foreground">
-                  Ctrl K
-                </span>
-              </div>
-            </form>
-
-            {/* Right Action Icons (Responsive) */}
-            <div className="flex items-center gap-1 sm:gap-2 shrink-0">
-              {/* Botão Instalar (Visível no Celular e Desktop) */}
-              {!isStandalone && (
-                <button
-                  type="button"
-                  onClick={handleInstallClick}
-                  className="inline-flex items-center gap-1.5 rounded-xl border border-primary/40 bg-primary/10 px-2.5 py-1.5 text-xs font-semibold text-primary transition hover:bg-primary/20 active:scale-95 shrink-0"
-                  title="Instalar no Celular / Computador"
-                >
-                  <Download className="h-3.5 w-3.5 shrink-0" />
-                  <span className="text-[11px] font-bold">Instalar</span>
-                </button>
-              )}
-
-              {/* Botão de Troca de Tema (Claro / Escuro) */}
-              <button
-                className="btn-ghost p-2 text-foreground"
-                onClick={toggleTheme}
-                aria-label={theme === "dark" ? "Ativar tema claro" : "Ativar tema escuro"}
-                title={theme === "dark" ? "Mudar para tema claro" : "Mudar para tema escuro"}
-              >
-                {theme === "dark" ? (
-                  <Sun className="h-4 w-4 text-muted-foreground hover:text-amber-400 transition" />
-                ) : (
-                  <Moon className="h-4 w-4 text-muted-foreground hover:text-primary transition" />
-                )}
-              </button>
-
-              {/* Notificações */}
-              <div className="relative">
-                <button
-                  className="btn-ghost relative p-2 text-foreground"
-                  onClick={() => setNotifOpen((o) => !o)}
-                  aria-label="Notificações"
-                  aria-haspopup="menu"
-                  aria-expanded={notifOpen}
-                >
-                  <Bell className="h-5 w-5 text-muted-foreground" />
-                  <span className="absolute -right-0.5 -top-0.5 flex h-4 min-w-4 items-center justify-center rounded-full bg-primary px-1 text-[10px] font-bold text-primary-foreground">
-                    {unread > 0 ? unread : "9+"}
-                  </span>
-                </button>
-                {notifOpen && (
-                  <div className="card absolute right-0 mt-2 w-80 overflow-hidden shadow-2xl z-50 bg-card border border-border">
-                    <div className="flex items-center justify-between border-b border-border px-4 py-2.5">
-                      <p className="text-sm font-semibold text-foreground">Notificações</p>
-                      {unread > 0 && (
-                        <form action="/api/notifications/read" method="post">
-                          <button className="text-xs font-semibold text-primary">Marcar todas</button>
-                        </form>
-                      )}
-                    </div>
-                    <ul className="max-h-80 overflow-y-auto">
-                      {notifs.length === 0 && (
-                        <li className="px-4 py-6 text-center text-sm text-muted-foreground">Sem notificações</li>
-                      )}
-                      {notifs.map((n) => (
-                        <li
-                          key={n.id}
-                          className={cn("border-b border-border px-4 py-3 last:border-0", !n.read && "bg-primary/5")}
-                        >
-                          <Link href={n.link ?? "#"} onClick={() => setNotifOpen(false)}>
-                            <p className="text-sm font-semibold text-foreground">{n.title}</p>
-                            {n.body && <p className="text-xs text-muted-foreground">{n.body}</p>}
-                          </Link>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                )}
-              </div>
-
-              {/* Avatar do Usuário */}
-              <div className="flex items-center gap-1.5 sm:gap-2 rounded-full border border-border bg-card py-1 pl-1.5 pr-2 sm:pr-3">
-                <Avatar user={user} size={28} />
-                <div className="hidden md:block text-left">
-                  <p className="max-w-[100px] truncate text-xs font-semibold leading-tight text-foreground">
-                    {user.fullName}
-                  </p>
-                  <p className="text-[10px] text-muted-foreground">
-                    {user.role === "admin" ? "Administrador" : "Aluno"}
-                  </p>
-                </div>
-                <span className="hidden sm:inline-flex items-center gap-1 rounded-md bg-amber-500/10 border border-amber-500/30 px-1.5 py-0.5 text-[10px] font-bold text-amber-500">
-                  👑 Pro
-                </span>
-              </div>
-
-              {/* Botão Sair */}
-              <form action="/api/auth/logout" method="post" className="hidden sm:block">
-                <button className="btn-ghost p-2" aria-label="Sair" title="Sair">
-                  <LogOut className="h-4 w-4 text-muted-foreground hover:text-destructive" />
-                </button>
-              </form>
+        {/* Drawer Mobile */}
+        {open && (
+          <div className="fixed inset-0 z-50 lg:hidden">
+            <div className="absolute inset-0 bg-black/60 backdrop-blur-xs" onClick={() => setOpen(false)} />
+            <div className="absolute inset-y-0 left-0 w-[270px] bg-card shadow-2xl animate-in slide-in-from-left duration-200">
+              {sidebar}
             </div>
           </div>
-        </header>
+        )}
 
-        {/* Área principal do conteúdo */}
-        <main className="flex-1 px-4 py-6 pb-28 sm:px-6 lg:px-8 lg:pb-8">{children}</main>
+        {/* Main content area */}
+        <div className="flex min-h-screen flex-col bg-background">
+          <header className="sticky top-0 z-40 border-b border-border bg-background/90 backdrop-blur">
+            <div className="flex h-16 items-center justify-between gap-2 px-3 sm:px-6">
+              {/* Left: Hamburger + Brand on mobile */}
+              <div className="flex items-center gap-2 min-w-0">
+                <button
+                  className="btn-ghost p-2 -ml-1 text-foreground lg:hidden shrink-0"
+                  onClick={() => setOpen(true)}
+                  aria-label="Mostrar menu"
+                >
+                  <Menu className="h-5 w-5" />
+                </button>
+                <Link href="/overview" className="flex items-center gap-2 lg:hidden min-w-0">
+                  <div className="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg bg-primary/20 text-primary font-bold text-xs">
+                    RCS
+                  </div>
+                  <span className="font-serif font-bold text-sm truncate max-w-[120px] sm:max-w-none text-foreground">
+                    Comunidade Saúde RCS
+                  </span>
+                </Link>
+              </div>
 
-        {/* Barra de Navegação Inferior Móvel (Print/Mobile view) */}
-        <nav
-          className="fixed inset-x-0 bottom-0 z-40 grid grid-cols-5 border-t border-border bg-card/95 backdrop-blur lg:hidden"
-          aria-label="Navegação rápida"
-        >
-          {NAV.filter((n) => MOBILE.includes(n.to)).map(({ to, label, icon: Icon }) => {
-            const active = pathname === to || (to !== "/overview" && pathname.startsWith(to));
-            return (
-              <Link
-                key={to}
-                href={to}
-                className={cn(
-                  "flex flex-col items-center justify-center gap-1 py-2.5 text-[10px] font-semibold transition active:scale-95",
-                  active ? "text-primary font-bold" : "text-muted-foreground hover:text-foreground",
+              {/* Search with Ctrl K (desktop / tablet) */}
+              <form action="/courses" className="hidden flex-1 max-w-md sm:flex mx-2">
+                <div className="flex items-center gap-2 rounded-xl border border-border bg-card px-3 h-10 w-full focus-within:border-primary">
+                  <Search className="h-4 w-4 shrink-0 text-muted-foreground" />
+                  <input
+                    name="q"
+                    placeholder="Buscar aulas, mentorias, materiais..."
+                    className="flex-1 bg-transparent text-xs text-foreground outline-none placeholder:text-muted-foreground"
+                  />
+                  <span className="rounded border border-border/80 bg-muted px-1.5 py-0.5 text-[10px] font-semibold text-muted-foreground">
+                    Ctrl K
+                  </span>
+                </div>
+              </form>
+
+              {/* Right Action Icons (Responsive) */}
+              <div className="flex items-center gap-1 sm:gap-2 shrink-0">
+                {/* Botão Simulador Mobile (Para Administrador em Desktop) */}
+                {user.role === "admin" && !isIframe && (
+                  <button
+                    type="button"
+                    onClick={() => setMobilePreview(true)}
+                    className="hidden sm:inline-flex items-center gap-1.5 rounded-xl border border-border bg-card px-2.5 py-1.5 text-xs font-semibold text-muted-foreground transition hover:text-foreground hover:bg-accent active:scale-95 shrink-0"
+                    title="Simulador de formato celular (Admin)"
+                  >
+                    <Smartphone className="h-3.5 w-3.5 shrink-0 text-primary" />
+                    <span className="text-[11px] font-bold">📱 Modo Celular</span>
+                  </button>
                 )}
-              >
-                <Icon className={cn("h-5 w-5", active ? "text-primary" : "text-muted-foreground")} />
-                <span className="truncate max-w-[60px] text-center">
-                  {label === "Meu Concurso" ? "Concursos" : label}
-                </span>
-              </Link>
-            );
-          })}
-        </nav>
+
+                {/* Botão Instalar (Visível no Celular e Desktop) */}
+                {!isStandalone && (
+                  <button
+                    type="button"
+                    onClick={handleInstallClick}
+                    className="inline-flex items-center gap-1.5 rounded-xl border border-primary/40 bg-primary/10 px-2.5 py-1.5 text-xs font-semibold text-primary transition hover:bg-primary/20 active:scale-95 shrink-0"
+                    title="Instalar no Celular / Computador"
+                  >
+                    <Download className="h-3.5 w-3.5 shrink-0" />
+                    <span className="text-[11px] font-bold">Instalar</span>
+                  </button>
+                )}
+
+                {/* Botão de Troca de Tema (Claro / Escuro) */}
+                <button
+                  className="btn-ghost p-2 text-foreground"
+                  onClick={toggleTheme}
+                  aria-label={theme === "dark" ? "Ativar tema claro" : "Ativar tema escuro"}
+                  title={theme === "dark" ? "Mudar para tema claro" : "Mudar para tema escuro"}
+                >
+                  {theme === "dark" ? (
+                    <Sun className="h-4 w-4 text-muted-foreground hover:text-amber-400 transition" />
+                  ) : (
+                    <Moon className="h-4 w-4 text-muted-foreground hover:text-primary transition" />
+                  )}
+                </button>
+
+                {/* Notificações */}
+                <div className="relative">
+                  <button
+                    className="btn-ghost relative p-2 text-foreground"
+                    onClick={() => setNotifOpen((o) => !o)}
+                    aria-label="Notificações"
+                    aria-haspopup="menu"
+                    aria-expanded={notifOpen}
+                  >
+                    <Bell className="h-5 w-5 text-muted-foreground" />
+                    <span className="absolute -right-0.5 -top-0.5 flex h-4 min-w-4 items-center justify-center rounded-full bg-primary px-1 text-[10px] font-bold text-primary-foreground">
+                      {unread > 0 ? unread : "9+"}
+                    </span>
+                  </button>
+                  {notifOpen && (
+                    <div className="card absolute right-0 mt-2 w-80 overflow-hidden shadow-2xl z-50 bg-card border border-border">
+                      <div className="flex items-center justify-between border-b border-border px-4 py-2.5">
+                        <p className="text-sm font-semibold text-foreground">Notificações</p>
+                        {unread > 0 && (
+                          <form action="/api/notifications/read" method="post">
+                            <button className="text-xs font-semibold text-primary">Marcar todas</button>
+                          </form>
+                        )}
+                      </div>
+                      <ul className="max-h-80 overflow-y-auto">
+                        {notifs.length === 0 && (
+                          <li className="px-4 py-6 text-center text-sm text-muted-foreground">Sem notificações</li>
+                        )}
+                        {notifs.map((n) => (
+                          <li
+                            key={n.id}
+                            className={cn("border-b border-border px-4 py-3 last:border-0", !n.read && "bg-primary/5")}
+                          >
+                            <Link href={n.link ?? "#"} onClick={() => setNotifOpen(false)}>
+                              <p className="text-sm font-semibold text-foreground">{n.title}</p>
+                              {n.body && <p className="text-xs text-muted-foreground">{n.body}</p>}
+                            </Link>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
+                </div>
+
+                {/* Avatar do Usuário */}
+                <div className="flex items-center gap-1.5 sm:gap-2 rounded-full border border-border bg-card py-1 pl-1.5 pr-2 sm:pr-3">
+                  <Avatar user={user} size={28} />
+                  <div className="hidden md:block text-left">
+                    <p className="max-w-[100px] truncate text-xs font-semibold leading-tight text-foreground">
+                      {user.fullName}
+                    </p>
+                    <p className="text-[10px] text-muted-foreground">
+                      {user.role === "admin" ? "Administrador" : "Aluno"}
+                    </p>
+                  </div>
+                  <span className="hidden sm:inline-flex items-center gap-1 rounded-md bg-amber-500/10 border border-amber-500/30 px-1.5 py-0.5 text-[10px] font-bold text-amber-500">
+                    👑 Pro
+                  </span>
+                </div>
+
+                {/* Botão Sair */}
+                <form action="/api/auth/logout" method="post" className="hidden sm:block">
+                  <button className="btn-ghost p-2" aria-label="Sair" title="Sair">
+                    <LogOut className="h-4 w-4 text-muted-foreground hover:text-destructive" />
+                  </button>
+                </form>
+              </div>
+            </div>
+          </header>
+
+          {/* Área principal do conteúdo */}
+          <main className="flex-1 px-4 py-6 pb-28 sm:px-6 lg:px-8 lg:pb-8">{children}</main>
+
+          {/* Barra de Navegação Inferior Móvel */}
+          <nav
+            className="fixed inset-x-0 bottom-0 z-40 grid grid-cols-5 border-t border-border bg-card/95 backdrop-blur lg:hidden"
+            aria-label="Navegação rápida"
+          >
+            {NAV.filter((n) => MOBILE.includes(n.to)).map(({ to, label, icon: Icon }) => {
+              const active = pathname === to || (to !== "/overview" && pathname.startsWith(to));
+              return (
+                <Link
+                  key={to}
+                  href={to}
+                  className={cn(
+                    "flex flex-col items-center justify-center gap-1 py-2.5 text-[10px] font-semibold transition active:scale-95",
+                    active ? "text-primary font-bold" : "text-muted-foreground hover:text-foreground",
+                  )}
+                >
+                  <Icon className={cn("h-5 w-5", active ? "text-primary" : "text-muted-foreground")} />
+                  <span className="truncate max-w-[60px] text-center">
+                    {label === "Meu Concurso" ? "Concursos" : label}
+                  </span>
+                </Link>
+              );
+            })}
+          </nav>
+        </div>
       </div>
 
       {/* Modal de Instruções de Instalação (PWA no Celular) */}
@@ -493,7 +544,7 @@ export function Shell({
           </div>
         </div>
       )}
-    </div>
+    </>
   );
 }
 

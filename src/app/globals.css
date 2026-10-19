@@ -1,21 +1,23 @@
 @import url("https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=DM+Serif+Display&display=swap");
 @import "tailwindcss";
 
+@custom-variant dark (&:where(.dark, .dark *));
+
 :root, html.light {
-  --background: #f5f8f7;
-  --foreground: #173b40;
+  --background: #f2f6f3;
+  --foreground: #0d281e;
   --card: #ffffff;
-  --card-foreground: #173b40;
-  --muted: #edf5f3;
-  --muted-foreground: #668084;
-  --accent: #e3f2ef;
-  --accent-foreground: #173b40;
-  --primary: #087d81;
+  --card-foreground: #0d281e;
+  --muted: #edf5f1;
+  --muted-foreground: #556d62;
+  --accent: #e1eee7;
+  --accent-foreground: #0d281e;
+  --primary: #0a8352;
   --primary-foreground: #ffffff;
-  --border: #dbe9e6;
-  --border-strong: #b8d3d0;
+  --border: #d7e4dc;
+  --border-strong: #b5cdc0;
   --destructive: #c64d4d;
-  --ring: #087d81;
+  --ring: #0a8352;
   --radius: 0.75rem;
 }
 
@@ -34,6 +36,17 @@ html.dark {
   --border-strong: #274836;
   --destructive: #f87171;
   --ring: #2ee587;
+}
+
+/* Fix browser autofill white background */
+input:-webkit-autofill,
+input:-webkit-autofill:hover, 
+input:-webkit-autofill:focus, 
+input:-webkit-autofill:active {
+  -webkit-box-shadow: 0 0 0 1000px var(--card) inset !important;
+  -webkit-text-fill-color: var(--foreground) !important;
+  transition: background-color 5000s ease-in-out 0s;
+  caret-color: var(--foreground);
 }
 
 @theme inline {
