@@ -102,7 +102,7 @@ export default async function OverviewPage() {
         {/* Continue de onde parou */}
         <Link
           href={`/courses/${activeCourseSlug}${cont?.next ? `?aula=${cont.next.slug}` : ""}`}
-          className="group relative flex flex-col justify-between overflow-hidden rounded-2xl border border-border bg-[#0e1c15] p-6 lg:col-span-2 transition hover:border-primary/50"
+          className="group relative flex flex-col justify-between overflow-hidden rounded-2xl border border-border bg-card p-6 lg:col-span-2 transition hover:border-primary/50"
         >
           {/* Fundo com efeito glow e gráfico */}
           <div
@@ -117,7 +117,7 @@ export default async function OverviewPage() {
               <span className="h-2 w-2 rounded-full bg-primary animate-pulse" />
               Continue de onde parou
             </p>
-            <h2 className="mt-3 font-serif text-2xl sm:text-3xl font-bold tracking-tight text-white group-hover:text-primary transition max-w-lg leading-tight">
+            <h2 className="mt-3 font-serif text-2xl sm:text-3xl font-bold tracking-tight text-foreground group-hover:text-primary transition max-w-lg leading-tight">
               {activeCourseTitle}
             </h2>
             <p className="mt-2 text-xs text-muted-foreground">
@@ -143,7 +143,7 @@ export default async function OverviewPage() {
         </Link>
 
         {/* Seu progresso */}
-        <div className="flex flex-col justify-between rounded-2xl border border-border bg-[#0e1c15] p-6 shadow-sm">
+        <div className="flex flex-col justify-between rounded-2xl border border-border bg-card p-6 shadow-sm">
           <div>
             <h3 className="text-xs font-bold text-muted-foreground uppercase tracking-wider">Seu progresso</h3>
 
@@ -221,7 +221,7 @@ export default async function OverviewPage() {
               <Link
                 key={c.id}
                 href={`/courses/${c.slug}`}
-                className="group flex w-[210px] shrink-0 flex-col overflow-hidden rounded-2xl border border-border bg-[#0e1c15] transition hover:border-primary/50 hover:shadow-lg"
+                className="group flex w-[210px] shrink-0 flex-col overflow-hidden rounded-2xl border border-border bg-card transition hover:border-primary/50 hover:shadow-lg"
               >
                 {/* Poster / Capa Vertical estilo PH Community */}
                 <div className="relative aspect-[3/4] w-full overflow-hidden bg-gradient-to-b from-[#132d20] to-[#091710] p-4 flex flex-col justify-between">
@@ -251,7 +251,7 @@ export default async function OverviewPage() {
 
                 {/* Título e Progresso */}
                 <div className="p-3.5 flex flex-col justify-between flex-1">
-                  <h3 className="line-clamp-2 text-xs font-bold uppercase leading-tight text-white group-hover:text-primary transition">
+                  <h3 className="line-clamp-2 text-xs font-bold uppercase leading-tight text-foreground group-hover:text-primary transition">
                     {c.title}
                   </h3>
                   <div className="mt-3 flex items-center justify-between text-[11px] text-muted-foreground border-t border-border/40 pt-2">
@@ -268,7 +268,7 @@ export default async function OverviewPage() {
       {/* 5. Três colunas: Mentorias, Novidades e Na comunidade */}
       <div className="grid gap-4 md:grid-cols-3">
         {/* Coluna 1: Mentorias */}
-        <div className="flex flex-col justify-between rounded-2xl border border-border bg-[#0e1c15] p-5 shadow-sm">
+        <div className="flex flex-col justify-between rounded-2xl border border-border bg-card p-5 shadow-sm">
           <div>
             <div className="flex items-center justify-between pb-3 border-b border-border/40">
               <h3 className="flex items-center gap-2 font-serif text-base font-bold text-white">
@@ -310,10 +310,10 @@ export default async function OverviewPage() {
         </div>
 
         {/* Coluna 2: Novidades */}
-        <div className="flex flex-col justify-between rounded-2xl border border-border bg-[#0e1c15] p-5 shadow-sm">
+        <div className="flex flex-col justify-between rounded-2xl border border-border bg-card p-5 shadow-sm">
           <div>
             <div className="flex items-center justify-between pb-3 border-b border-border/40">
-              <h3 className="flex items-center gap-2 font-serif text-base font-bold text-white">
+              <h3 className="flex items-center gap-2 font-serif text-base font-bold text-foreground">
                 <span className="text-primary text-sm">📰</span> Novidades
               </h3>
               <Link href="/novidades" className="text-xs font-semibold text-primary hover:underline">
@@ -335,7 +335,7 @@ export default async function OverviewPage() {
                       <PlayCircle className="h-4 w-4" />
                     </div>
                     <div className="min-w-0 flex-1">
-                      <p className="truncate text-xs font-bold text-white group-hover:text-primary transition">
+                      <p className="truncate text-xs font-bold text-foreground group-hover:text-primary transition">
                         {n.title}
                       </p>
                       <p className="text-[10px] text-muted-foreground truncate">
@@ -350,10 +350,10 @@ export default async function OverviewPage() {
         </div>
 
         {/* Coluna 3: Na comunidade */}
-        <div className="flex flex-col justify-between rounded-2xl border border-border bg-[#0e1c15] p-5 shadow-sm">
+        <div className="flex flex-col justify-between rounded-2xl border border-border bg-card p-5 shadow-sm">
           <div>
             <div className="flex items-center justify-between pb-3 border-b border-border/40">
-              <h3 className="flex items-center gap-2 font-serif text-base font-bold text-white">
+              <h3 className="flex items-center gap-2 font-serif text-base font-bold text-foreground">
                 <span className="text-primary text-sm">👥</span> Na comunidade
               </h3>
               <Link href="/community" className="text-xs font-semibold text-primary hover:underline">
@@ -374,7 +374,7 @@ export default async function OverviewPage() {
                     <Avatar user={p.author} size={26} />
                     <div className="min-w-0 flex-1">
                       <div className="flex items-center gap-1.5">
-                        <span className="truncate text-xs font-bold text-white group-hover:text-primary transition">
+                        <span className="truncate text-xs font-bold text-foreground group-hover:text-primary transition">
                           {p.author.fullName}
                         </span>
                         <span className="text-[10px] text-muted-foreground shrink-0">· {timeAgo(p.createdAt)}</span>
@@ -394,7 +394,7 @@ export default async function OverviewPage() {
       {/* 6. Destaque da semana / Como usar a plataforma */}
       <section className="space-y-2">
         <p className="text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">Como usar a plataforma</p>
-        <div className="overflow-hidden rounded-2xl border border-border bg-[#0e1c15] p-6 sm:p-8">
+        <div className="overflow-hidden rounded-2xl border border-border bg-card p-6 sm:p-8">
           <div className="grid gap-6 lg:grid-cols-[1.2fr_1fr] items-center">
             {/* Lado esquerdo */}
             <div className="space-y-4">

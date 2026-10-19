@@ -765,15 +765,15 @@ export function AnotacoesClient({
       className="space-y-6 pb-12"
     >
       {/* 1. Top Hero Card estilo PH Community / Comunidade Saúde RCS (Print 01 e 05) */}
-      <div className="relative overflow-hidden rounded-3xl border border-border bg-[#0e1c15] p-6 sm:p-10 shadow-sm">
+      <div className="relative overflow-hidden rounded-3xl border border-border bg-card p-6 sm:p-10 shadow-sm">
         <div className="relative z-10 max-w-2xl">
-          <span className="inline-flex items-center gap-1.5 rounded-full border border-emerald-500/30 bg-emerald-500/10 px-3 py-1 text-xs font-semibold text-[#3bff8d]">
+          <span className="inline-flex items-center gap-1.5 rounded-full border border-emerald-500/30 bg-emerald-500/10 px-3 py-1 text-xs font-semibold text-primary">
             Anotações
           </span>
 
-          <h1 className="mt-4 font-serif text-3xl font-extrabold tracking-tight text-white sm:text-4xl">
+          <h1 className="mt-4 font-serif text-3xl font-extrabold tracking-tight text-foreground sm:text-4xl">
             Organize suas ideias <br />
-            <span className="text-[#3bff8d]">em mapas mentais</span>
+            <span className="text-primary">em mapas mentais</span>
           </h1>
 
           <p className="mt-3 text-xs leading-relaxed text-muted-foreground sm:text-sm">
@@ -783,7 +783,7 @@ export function AnotacoesClient({
         </div>
 
         {/* Efeito decorativo sutil */}
-        <div className="pointer-events-none absolute right-0 top-0 h-full w-1/2 bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-emerald-500/10 via-transparent to-transparent" />
+        <div className="pointer-events-none absolute right-0 top-0 h-full w-1/2 bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-primary/10 via-transparent to-transparent" />
       </div>
 
       {/* 2. Barra Superior: Busca + Botão "Novo mapa" (Print 01 e 05) */}
@@ -795,7 +795,7 @@ export function AnotacoesClient({
             value={search}
             onChange={(e) => setSearch(e.target.value)}
             placeholder="Buscar nos mapas"
-            className="h-10 w-full rounded-xl border border-border bg-[#0e1c15] pl-10 pr-4 text-xs text-foreground placeholder:text-muted-foreground outline-none focus:border-primary transition"
+            className="h-10 w-full rounded-xl border border-border bg-card pl-10 pr-4 text-xs text-foreground placeholder:text-muted-foreground outline-none focus:border-primary transition"
           />
         </div>
 
@@ -907,14 +907,14 @@ export function AnotacoesClient({
               {communityMaps.map((m) => (
                 <div
                   key={m.id}
-                  className="rounded-2xl border border-border bg-[#0e1c15] p-5 flex flex-col justify-between hover:border-primary/50 transition group"
+                  className="rounded-2xl border border-border bg-card p-5 flex flex-col justify-between hover:border-primary/50 transition group"
                 >
                   <div>
-                    <div className="flex items-center gap-2 text-[11px] text-[#3bff8d] font-semibold">
+                    <div className="flex items-center gap-2 text-[11px] text-primary font-semibold">
                       <Globe className="h-3.5 w-3.5" />
                       <span>{m.subtitle}</span>
                     </div>
-                    <h3 className="mt-2 font-serif text-base font-bold text-white group-hover:text-primary transition">
+                    <h3 className="mt-2 font-serif text-base font-bold text-foreground group-hover:text-primary transition">
                       {m.title}
                     </h3>
                     <p className="mt-2 line-clamp-3 text-xs text-muted-foreground whitespace-pre-line leading-relaxed">
@@ -932,21 +932,21 @@ export function AnotacoesClient({
             </div>
           ) : filteredUserNotes.length === 0 ? (
             /* Estado Vazio */
-            <div className="flex min-h-[340px] flex-col items-center justify-center rounded-2xl border border-border bg-[#0e1c15] p-8 text-center shadow-sm">
+            <div className="flex min-h-[340px] flex-col items-center justify-center rounded-2xl border border-border bg-card p-8 text-center shadow-sm">
               <div className="flex h-14 w-14 items-center justify-center rounded-full bg-primary/10 border border-primary/20 text-primary mb-4">
                 <Network className="h-7 w-7" />
               </div>
 
               {activeTab === "favoritos" ? (
                 <>
-                  <h3 className="font-serif text-lg font-bold text-white">Nenhum favorito ainda</h3>
+                  <h3 className="font-serif text-lg font-bold text-foreground">Nenhum favorito ainda</h3>
                   <p className="mt-1.5 text-xs text-muted-foreground max-w-sm">
                     Toque na estrela de um mapa para ele aparecer aqui.
                   </p>
                 </>
               ) : (
                 <>
-                  <h3 className="font-serif text-lg font-bold text-white">Nenhum mapa aqui ainda</h3>
+                  <h3 className="font-serif text-lg font-bold text-foreground">Nenhum mapa aqui ainda</h3>
                   <p className="mt-1.5 text-xs text-muted-foreground max-w-sm">
                     Crie o primeiro: um tema central, ramos, notas, vídeos e áudios.
                   </p>
@@ -965,18 +965,18 @@ export function AnotacoesClient({
               {filteredUserNotes.map((n) => (
                 <div
                   key={n.id}
-                  className="relative rounded-2xl border border-border bg-[#0e1c15] p-4 flex items-center justify-between hover:border-primary/50 transition group"
+                  className="relative rounded-2xl border border-border bg-card p-4 flex items-center justify-between hover:border-primary/50 transition group"
                 >
                   <div className="flex items-center gap-3 min-w-0">
                     {/* Ícone verde de Nós/Mapa Mental (Print 05) */}
-                    <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-emerald-500/10 border border-emerald-500/25 text-[#3bff8d]">
+                    <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-emerald-500/10 border border-emerald-500/25 text-primary">
                       <Network className="h-5 w-5" />
                     </div>
 
                     <div className="min-w-0">
                       <Link
                         href={`/anotacoes/${n.id}`}
-                        className="block font-semibold text-sm text-white group-hover:text-primary transition hover:underline truncate"
+                        className="block font-semibold text-sm text-foreground group-hover:text-primary transition hover:underline truncate"
                       >
                         {n.title}
                       </Link>
@@ -1007,7 +1007,7 @@ export function AnotacoesClient({
                         e.stopPropagation();
                         setOpenMenuId(openMenuId === n.id ? null : n.id);
                       }}
-                      className="p-1.5 text-muted-foreground hover:text-white transition rounded-lg hover:bg-white/10"
+                      className="p-1.5 text-muted-foreground hover:text-foreground transition rounded-lg hover:bg-muted"
                     >
                       <MoreHorizontal className="h-4 w-4" />
                     </button>
@@ -1016,7 +1016,7 @@ export function AnotacoesClient({
                     {openMenuId === n.id && (
                       <div
                         onClick={(e) => e.stopPropagation()}
-                        className="absolute right-0 top-full mt-1.5 z-40 w-44 rounded-xl border border-border bg-[#0a1811] py-1 shadow-2xl backdrop-blur-md text-xs text-white"
+                        className="absolute right-0 top-full mt-1.5 z-40 w-44 rounded-xl border border-border bg-card py-1 shadow-2xl backdrop-blur-md text-xs text-foreground"
                       >
                         {/* Renomear */}
                         <button
@@ -1081,7 +1081,7 @@ export function AnotacoesClient({
       {/* 4. Modal "Novo mapa" (Print 01 e 02) */}
       {showNewMapModal && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/75 p-4 backdrop-blur-sm animate-in fade-in duration-200">
-          <div className="relative w-full max-w-3xl rounded-2xl border border-border bg-[#0e1c15] p-6 sm:p-8 shadow-2xl overflow-y-auto max-h-[90vh]">
+          <div className="relative w-full max-w-3xl rounded-2xl border border-border bg-card p-6 sm:p-8 shadow-2xl overflow-y-auto max-h-[90vh]">
             <button
               onClick={() => setShowNewMapModal(false)}
               className="btn-ghost absolute right-4 top-4 p-2 text-muted-foreground hover:text-foreground"
@@ -1091,7 +1091,7 @@ export function AnotacoesClient({
             </button>
 
             <div>
-              <h2 className="font-serif text-xl font-bold text-white">Novo mapa</h2>
+              <h2 className="font-serif text-xl font-bold text-foreground">Novo mapa</h2>
               <p className="mt-1 text-xs text-muted-foreground max-w-xl">
                 Comece em branco ou a partir de um modelo. Depois dá para mudar tudo: textos, layout e tema.
               </p>
@@ -1111,7 +1111,7 @@ export function AnotacoesClient({
 
                   <button
                     type="submit"
-                    className="group flex w-full flex-col justify-between rounded-xl border border-border bg-[#0a1811] p-3.5 text-left transition hover:border-primary/50 hover:bg-accent/40"
+                    className="group flex w-full flex-col justify-between rounded-xl border border-border bg-muted/40 p-3.5 text-left transition hover:border-primary/50 hover:bg-accent/40"
                   >
                     <div>
                       {/* Mini preview visual */}
@@ -1133,7 +1133,7 @@ export function AnotacoesClient({
                         )}
                       </div>
 
-                      <h4 className="text-xs font-bold text-white group-hover:text-primary transition">
+                      <h4 className="text-xs font-bold text-foreground group-hover:text-primary transition">
                         {tpl.title}
                       </h4>
                       <p className="mt-1 text-[11px] leading-relaxed text-muted-foreground line-clamp-2">
@@ -1151,7 +1151,7 @@ export function AnotacoesClient({
       {/* 5. Modal "Nova pasta" */}
       {showNewFolderModal && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/75 p-4 backdrop-blur-sm animate-in fade-in duration-200">
-          <div className="relative w-full max-w-md rounded-2xl border border-border bg-[#0e1c15] p-6 shadow-2xl">
+          <div className="relative w-full max-w-md rounded-2xl border border-border bg-card p-6 shadow-2xl">
             <button
               onClick={() => setShowNewFolderModal(false)}
               className="btn-ghost absolute right-4 top-4 p-2 text-muted-foreground hover:text-foreground"
@@ -1160,7 +1160,7 @@ export function AnotacoesClient({
               <X className="h-5 w-5" />
             </button>
 
-            <h2 className="font-serif text-lg font-bold text-white">Nova pasta</h2>
+            <h2 className="font-serif text-lg font-bold text-foreground">Nova pasta</h2>
 
             <form onSubmit={handleAddFolder} className="mt-4 space-y-4">
               <div>
@@ -1171,7 +1171,7 @@ export function AnotacoesClient({
                   value={newFolderName}
                   onChange={(e) => setNewFolderName(e.target.value)}
                   placeholder="Nome da pasta"
-                  className="h-10 w-full rounded-xl border border-border bg-[#07110c] px-3 text-xs text-foreground placeholder:text-muted-foreground outline-none focus:border-primary"
+                  className="h-10 w-full rounded-xl border border-border bg-background px-3 text-xs text-foreground placeholder:text-muted-foreground outline-none focus:border-primary"
                 />
               </div>
 
@@ -1198,7 +1198,7 @@ export function AnotacoesClient({
       {/* 6. Modal "Renomear" (Print 05) */}
       {renamingNote && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/75 p-4 backdrop-blur-sm animate-in fade-in duration-200">
-          <div className="relative w-full max-w-md rounded-2xl border border-border bg-[#0e1c15] p-6 shadow-2xl">
+          <div className="relative w-full max-w-md rounded-2xl border border-border bg-card p-6 shadow-2xl">
             <button
               onClick={() => setRenamingNote(null)}
               className="btn-ghost absolute right-4 top-4 p-2 text-muted-foreground hover:text-foreground"
@@ -1207,7 +1207,7 @@ export function AnotacoesClient({
               <X className="h-5 w-5" />
             </button>
 
-            <h2 className="font-serif text-lg font-bold text-white">Renomear mapa mental</h2>
+            <h2 className="font-serif text-lg font-bold text-foreground">Renomear mapa mental</h2>
 
             <form onSubmit={handleRenameSubmit} className="mt-4 space-y-4">
               <div>
@@ -1220,7 +1220,7 @@ export function AnotacoesClient({
                     setRenamingNote({ ...renamingNote, title: e.target.value })
                   }
                   placeholder="Novo título"
-                  className="h-10 w-full rounded-xl border border-border bg-[#07110c] px-3 text-xs text-foreground placeholder:text-muted-foreground outline-none focus:border-primary"
+                  className="h-10 w-full rounded-xl border border-border bg-background px-3 text-xs text-foreground placeholder:text-muted-foreground outline-none focus:border-primary"
                 />
               </div>
 
@@ -1247,7 +1247,7 @@ export function AnotacoesClient({
       {/* 7. Modal "Mover para pasta" (Print 05) */}
       {movingNote && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/75 p-4 backdrop-blur-sm animate-in fade-in duration-200">
-          <div className="relative w-full max-w-md rounded-2xl border border-border bg-[#0e1c15] p-6 shadow-2xl">
+          <div className="relative w-full max-w-md rounded-2xl border border-border bg-card p-6 shadow-2xl">
             <button
               onClick={() => setMovingNote(null)}
               className="btn-ghost absolute right-4 top-4 p-2 text-muted-foreground hover:text-foreground"
@@ -1256,7 +1256,7 @@ export function AnotacoesClient({
               <X className="h-5 w-5" />
             </button>
 
-            <h2 className="font-serif text-lg font-bold text-white">Mover para pasta</h2>
+            <h2 className="font-serif text-lg font-bold text-foreground">Mover para pasta</h2>
             <p className="mt-1 text-xs text-muted-foreground">
               Selecione o destino para este mapa mental.
             </p>
@@ -1269,8 +1269,8 @@ export function AnotacoesClient({
                   onClick={() => handleMoveFolderSubmit(f)}
                   className={`flex w-full items-center justify-between rounded-xl px-4 py-2.5 text-xs font-medium transition ${
                     movingNote.currentFolder === f
-                      ? "bg-emerald-500/20 text-[#3bff8d] font-bold border border-emerald-500/40"
-                      : "bg-[#07110c] text-white hover:bg-accent/60"
+                      ? "bg-primary/20 text-primary font-bold border border-primary/40"
+                      : "bg-muted/50 text-foreground hover:bg-accent/60"
                   }`}
                 >
                   <span className="flex items-center gap-2">

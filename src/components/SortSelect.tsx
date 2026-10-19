@@ -17,7 +17,7 @@ export function SortSelect({ defaultValue }: { defaultValue: string }) {
       aria-label="Ordenar cursos"
       defaultValue={defaultValue}
       onChange={(e) => handleChange(e.target.value)}
-      className="h-9 rounded-xl border border-border bg-[#0e1c15] px-2.5 text-xs text-muted-foreground outline-none focus:border-primary cursor-pointer"
+      className="h-9 rounded-xl border border-border bg-card px-2.5 text-xs text-foreground outline-none focus:border-primary cursor-pointer"
     >
       <option value="recent">Mais recentes</option>
       <option value="title">Título (A-Z)</option>

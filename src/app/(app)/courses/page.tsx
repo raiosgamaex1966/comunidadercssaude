@@ -95,7 +95,7 @@ export default async function CoursesPage({
   return (
     <div className="mx-auto max-w-6xl space-y-10 pb-16">
       {/* 1. Hero Banner Principal (A Bíblia do Concurso / Trilha Destaque) */}
-      <div className="relative overflow-hidden rounded-3xl border border-border bg-[#0e1c15] p-6 sm:p-10 shadow-2xl">
+      <div className="relative overflow-hidden rounded-3xl border border-border bg-card p-6 sm:p-10 shadow-2xl">
         <div
           className="absolute inset-0 pointer-events-none opacity-25"
           style={{
@@ -104,7 +104,7 @@ export default async function CoursesPage({
         />
         <div className="relative z-10 grid gap-8 lg:grid-cols-[1.3fr_1fr] items-center">
           <div className="space-y-4">
-            <h1 className="font-serif text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-white leading-[1.1]">
+            <h1 className="font-serif text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-foreground leading-[1.1]">
               A Bíblia dos Concursos da Saúde
             </h1>
             <p className="text-sm sm:text-base text-muted-foreground max-w-lg leading-relaxed">
@@ -210,7 +210,7 @@ export default async function CoursesPage({
           {upcomingCourses.map((u) => (
             <div
               key={u.title}
-              className="group flex flex-col justify-between overflow-hidden rounded-2xl border border-border bg-[#0e1c15] p-4 transition hover:border-primary/40"
+              className="group flex flex-col justify-between overflow-hidden rounded-2xl border border-border bg-card p-4 transition hover:border-primary/40"
             >
               <div className="relative aspect-[3/4] w-full overflow-hidden rounded-xl bg-gradient-to-b from-[#132d20] to-[#07130d] p-4 flex flex-col justify-between">
                 <span className="rounded-md border border-amber-500/30 bg-amber-500/10 px-2 py-0.5 text-[10px] font-bold text-amber-400 w-fit">
@@ -223,7 +223,7 @@ export default async function CoursesPage({
               </div>
 
               <div className="mt-3">
-                <h3 className="line-clamp-2 text-xs font-bold uppercase text-white group-hover:text-primary transition">
+                <h3 className="line-clamp-2 text-xs font-bold uppercase text-foreground group-hover:text-primary transition">
                   {u.title}
                 </h3>
                 <p className="mt-1 text-[11px] text-muted-foreground">{u.lessons} aulas previstas</p>
@@ -235,7 +235,7 @@ export default async function CoursesPage({
 
       {/* 6. Todos os cursos (Filtros + Grid de 4 Colunas) */}
       <section className="space-y-5 pt-4 border-t border-border/40">
-        <h2 className="font-serif text-xl font-bold text-white tracking-tight">Todos os cursos</h2>
+        <h2 className="font-serif text-xl font-bold text-foreground tracking-tight">Todos os cursos</h2>
 
         {/* Barra de Filtros e Busca */}
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
@@ -249,7 +249,7 @@ export default async function CoursesPage({
                   "rounded-xl px-3.5 py-1.5 text-xs font-semibold transition",
                   estado === s.k
                     ? "bg-[#3bff8d] text-[#051b10] shadow-sm font-bold"
-                    : "bg-[#0e1c15] border border-border text-muted-foreground hover:text-foreground hover:border-primary/40",
+                    : "bg-card border border-border text-muted-foreground hover:text-foreground hover:border-primary/40",
                 )}
               >
                 {s.l}
@@ -264,7 +264,7 @@ export default async function CoursesPage({
                 name="q"
                 defaultValue={sp.q}
                 placeholder="Buscar curso..."
-                className="h-9 w-48 sm:w-60 rounded-xl border border-border bg-[#0e1c15] pl-8 pr-3 text-xs text-foreground placeholder:text-muted-foreground outline-none focus:border-primary"
+                className="h-9 w-48 sm:w-60 rounded-xl border border-border bg-card pl-8 pr-3 text-xs text-foreground placeholder:text-muted-foreground outline-none focus:border-primary"
               />
               <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
               <input type="hidden" name="estado" value={estado} />
@@ -277,7 +277,7 @@ export default async function CoursesPage({
 
         {/* Grid 4 Colunas */}
         {filtered.length === 0 ? (
-          <div className="rounded-2xl border border-border bg-[#0e1c15] p-12 text-center">
+          <div className="rounded-2xl border border-border bg-card p-12 text-center">
             <p className="font-serif text-lg font-bold text-white">Nenhum curso encontrado</p>
             <p className="mt-1 text-xs text-muted-foreground">Tente alterar os filtros ou o termo de busca.</p>
             <Link href="/courses" className="btn-outline mt-4 inline-flex text-xs">
@@ -315,7 +315,7 @@ function PosterCard({ c }: { c: any }) {
   return (
     <Link
       href={`/courses/${c.slug}`}
-      className="group flex w-[220px] shrink-0 flex-col overflow-hidden rounded-2xl border border-border bg-[#0e1c15] transition hover:border-primary/50 hover:shadow-xl"
+      className="group flex w-[220px] shrink-0 flex-col overflow-hidden rounded-2xl border border-border bg-card transition hover:border-primary/50 hover:shadow-xl"
     >
       {/* Capa Vertical 3:4 */}
       <div className="relative aspect-[3/4] w-full overflow-hidden bg-gradient-to-b from-[#132d20] to-[#07130d] p-4 flex flex-col justify-between">
@@ -350,7 +350,7 @@ function PosterCard({ c }: { c: any }) {
 
       {/* Conteúdo inferior */}
       <div className="p-3.5 flex flex-col justify-between flex-1">
-        <h3 className="line-clamp-2 text-xs font-bold uppercase leading-tight text-white group-hover:text-primary transition">
+        <h3 className="line-clamp-2 text-xs font-bold uppercase leading-tight text-foreground group-hover:text-primary transition">
           {c.title}
         </h3>
         <div className="mt-3 flex items-center justify-between text-[11px] text-muted-foreground border-t border-border/40 pt-2">
@@ -393,7 +393,7 @@ function NumberedPosterCard({ c, number }: { c: any; number: number }) {
       {/* Card Vertical Poster 3:4 que sobrepõe suavemente o número */}
       <Link
         href={`/courses/${c.slug}`}
-        className="group relative z-10 flex w-[210px] sm:w-[220px] shrink-0 flex-col overflow-hidden rounded-2xl border border-border bg-[#0e1c15] transition hover:border-primary/50 hover:shadow-2xl"
+        className="group relative z-10 flex w-[210px] sm:w-[220px] shrink-0 flex-col overflow-hidden rounded-2xl border border-border bg-card transition hover:border-primary/50 hover:shadow-2xl"
       >
         {/* Capa Vertical 3:4 */}
         <div className="relative aspect-[3/4] w-full overflow-hidden bg-gradient-to-b from-[#132d20] to-[#07130d] p-3.5 flex flex-col justify-between">

@@ -13,6 +13,12 @@ export const metadata: Metadata = {
     ],
     apple: "/apple-touch-icon.png",
   },
+  manifest: "/manifest.json",
+  appleWebApp: {
+    capable: true,
+    statusBarStyle: "black-translucent",
+    title: "Saúde RCS",
+  },
   openGraph: {
     title: "Comunidade Saúde RCS — Concursos da Saúde",
     description: "Preparação organizada para concursos da saúde: Enfermagem, Técnico de Enfermagem e Radiologia Médica. Matérias por edital, plano individual, comunidade e podcasts.",
@@ -42,8 +48,10 @@ export default function RootLayout({ children }: { children: ReactNode }) {
     <html lang="pt-BR" className="dark" suppressHydrationWarning>
       <head>
         <meta name="theme-color" content="#07110c" />
+        <meta name="mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-capable" content="yes" />
       </head>
-      <body className="min-h-screen antialiased">{children}</body>
+      <body className="min-h-screen antialiased bg-background text-foreground">{children}</body>
     </html>
   );
 }
