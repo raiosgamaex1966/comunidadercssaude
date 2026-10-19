@@ -1,129 +1,143 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" width="1200" height="630">
   <defs>
+    <!-- Gradiente de Fundo Premium -->
     <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#08383c" />
-      <stop offset="50%" stop-color="#0d555b" />
-      <stop offset="100%" stop-color="#062528" />
+      <stop offset="0%" stop-color="#04140c" />
+      <stop offset="45%" stop-color="#072316" />
+      <stop offset="100%" stop-color="#020a06" />
     </linearGradient>
 
-    <linearGradient id="cardGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#0ca8ad" />
-      <stop offset="100%" stop-color="#087d81" />
+    <!-- Gradiente do Badge RCS -->
+    <linearGradient id="rcsGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#10b981" />
+      <stop offset="100%" stop-color="#056138" />
     </linearGradient>
 
-    <radialGradient id="glow" cx="30%" cy="20%" r="60%">
-      <stop offset="0%" stop-color="#59d1c7" stop-opacity="0.35" />
-      <stop offset="100%" stop-color="#0d555b" stop-opacity="0" />
+    <!-- Gradiente de Texto e Acentos -->
+    <linearGradient id="goldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#34d399" />
+      <stop offset="100%" stop-color="#10b981" />
+    </linearGradient>
+
+    <!-- Luzes Radiais de Fundo -->
+    <radialGradient id="glowTop" cx="50%" cy="20%" r="50%">
+      <stop offset="0%" stop-color="#10b981" stop-opacity="0.25" />
+      <stop offset="100%" stop-color="#072316" stop-opacity="0" />
     </radialGradient>
 
-    <filter id="shadow" x="-10%" y="-10%" width="120%" height="120%">
-      <feDropShadow dx="0" dy="16" stdDeviation="24" flood-color="#000" flood-opacity="0.45" />
+    <radialGradient id="glowCorner" cx="10%" cy="90%" r="40%">
+      <stop offset="0%" stop-color="#059669" stop-opacity="0.15" />
+      <stop offset="100%" stop-color="#04140c" stop-opacity="0" />
+    </radialGradient>
+
+    <filter id="cardShadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="16" stdDeviation="24" flood-color="#000000" flood-opacity="0.6" />
     </filter>
 
-    <filter id="badgeShadow" x="-10%" y="-10%" width="120%" height="120%">
-      <feDropShadow dx="0" dy="6" stdDeviation="10" flood-color="#000" flood-opacity="0.25" />
+    <filter id="badgeGlow" x="-30%" y="-30%" width="160%" height="160%">
+      <feDropShadow dx="0" dy="0" stdDeviation="18" flood-color="#10b981" flood-opacity="0.45" />
     </filter>
   </defs>
 
   <style>
-    .title { font-family: 'DM Serif Display', Georgia, serif; font-weight: 700; fill: #ffffff; }
-    .text { font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; }
+    .title-font { font-family: 'DM Serif Display', Georgia, serif; }
+    .sans-font { font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; }
   </style>
 
-  <!-- Fundo com gradiente e iluminação médica suave -->
+  <!-- Fundo -->
   <rect width="1200" height="630" fill="url(#bgGrad)" />
-  <rect width="1200" height="630" fill="url(#glow)" />
+  <rect width="1200" height="630" fill="url(#glowTop)" />
+  <rect width="1200" height="630" fill="url(#glowCorner)" />
 
-  <!-- Detalhes de grid geométrico sutil ao fundo -->
-  <g opacity="0.06" stroke="#ffffff" stroke-width="1.5">
-    <line x1="100" y1="0" x2="100" y2="630" />
-    <line x1="300" y1="0" x2="300" y2="630" />
-    <line x1="500" y1="0" x2="500" y2="630" />
-    <line x1="700" y1="0" x2="700" y2="630" />
-    <line x1="900" y1="0" x2="900" y2="630" />
-    <line x1="1100" y1="0" x2="1100" y2="630" />
-    <line x1="0" y1="120" x2="1200" y2="120" />
-    <line x1="0" y1="280" x2="1200" y2="280" />
-    <line x1="0" y1="440" x2="1200" y2="440" />
+  <!-- Padrão Geométrico Suave -->
+  <g opacity="0.04" stroke="#ffffff" stroke-width="1.5">
+    <line x1="150" y1="0" x2="150" y2="630" />
+    <line x1="350" y1="0" x2="350" y2="630" />
+    <line x1="600" y1="0" x2="600" y2="630" />
+    <line x1="850" y1="0" x2="850" y2="630" />
+    <line x1="1050" y1="0" x2="1050" y2="630" />
+    <line x1="0" y1="130" x2="1200" y2="130" />
+    <line x1="0" y1="315" x2="1200" y2="315" />
+    <line x1="0" y1="500" x2="1200" y2="500" />
   </g>
 
-  <!-- Logo Mark Oficial no Topo / Esquerda -->
-  <g transform="translate(100, 75)">
-    <rect width="72" height="72" rx="22" fill="url(#cardGrad)" filter="url(#badgeShadow)" />
-    <g transform="translate(12, 12)">
-      <path
-        d="M24 39s-15-9.6-15-19.8C9 13.5 12.9 9.8 17.5 9.8c2.8 0 5.4 1.5 6.9 3.9 1.5-2.4 4.1-3.9 6.9-3.9 4.6 0 8.5 3.7 8.5 9.4C39.8 29.4 24 39 24 39z"
-        fill="none"
-        stroke="#ffffff"
-        stroke-width="2.6"
-        stroke-linejoin="round"
-      />
-      <path
-        d="M13.5 22.5h6l2.6-5.2 3.2 10.5 2.6-5.3H34.5"
-        fill="none"
-        stroke="#ffffff"
-        stroke-width="2.3"
-        stroke-linecap="round"
-        stroke-linejoin="round"
-      />
+  <!-- Borda Decorativa com cantos suaves -->
+  <rect x="25" y="25" width="1150" height="580" rx="32" fill="none" stroke="#10b981" stroke-opacity="0.25" stroke-width="2" />
+
+  <!-- CONTEÚDO CENTRALIZADO (Para ficar perfeito tanto em formato banner quanto no recorte quadrado do WhatsApp) -->
+
+  <!-- 1. BADGE OFICIAL RCS (Grande e destacado) -->
+  <g transform="translate(600, 115)">
+    <!-- Círculo de Brilho de Fundo -->
+    <rect x="-65" y="-35" width="130" height="90" rx="26" fill="url(#rcsGrad)" filter="url(#badgeGlow)" stroke="#34d399" stroke-width="2.5" />
+    
+    <!-- Texto RCS em destaque -->
+    <text x="0" y="22" text-anchor="middle" class="sans-font" font-size="44" font-weight="900" fill="#ffffff" letter-spacing="3">
+      RCS
+    </text>
+
+    <!-- Coração / Eletrocardiograma decorativo no topo do badge -->
+    <g transform="translate(-16, -26) scale(0.65)" stroke="#ffffff" fill="none" stroke-width="3">
+      <path d="M24 37s-14-9-14-18.5C10 12.5 13.5 9 18 9c2.8 0 4.8 1.5 6 3.5 1.2-2 3.2-3.5 6-3.5 4.5 0 8 3.5 8 9.5C38 28 24 37 24 37z" stroke-linecap="round" stroke-linejoin="round" />
+      <path d="M14 22h5l2.5-5 3 10 2.5-5H34" stroke-linecap="round" stroke-linejoin="round" />
     </g>
-    <!-- Texto do Logo -->
-    <text x="92" y="36" class="title" font-size="28" fill="#ffffff" letter-spacing="0.5">RCS Prime Comunity</text>
-    <text x="92" y="58" class="text" font-size="13" font-weight="700" fill="#59d1c7" letter-spacing="4">CONCURSOS DA SAÚDE</text>
   </g>
 
-  <!-- Tag de Destaque -->
-  <g transform="translate(100, 185)">
-    <rect width="360" height="38" rx="19" fill="#0ca8ad" fill-opacity="0.22" stroke="#59d1c7" stroke-width="1.5" />
-    <circle cx="24" cy="19" r="5" fill="#59d1c7" />
-    <text x="40" y="24" class="text" font-size="13" font-weight="700" fill="#e5f1ee" letter-spacing="1.5">PREPARAÇÃO COMPLETA POR EDITAL</text>
+  <!-- 2. TAG SUPERIOR: CONCURSOS DA SAÚDE -->
+  <g transform="translate(600, 215)">
+    <rect x="-190" y="-18" width="380" height="36" rx="18" fill="#10b981" fill-opacity="0.15" stroke="#10b981" stroke-opacity="0.4" stroke-width="1.5" />
+    <circle cx="-160" cy="0" r="4" fill="#34d399" />
+    <text x="5" y="5" text-anchor="middle" class="sans-font" font-size="13" font-weight="800" fill="#a7f3d0" letter-spacing="3.5">
+      PLATAFORMA PARA CONCURSOS DA SAÚDE
+    </text>
   </g>
 
-  <!-- Título Principal -->
-  <text x="100" y="285" class="title" font-size="52" fill="#ffffff">
-    A Comunidade Oficial de Concursos:
-  </text>
-  <text x="100" y="348" class="title" font-size="50" fill="#59d1c7">
-    Enfermagem e Radiologia Médica
+  <!-- 3. TÍTULO PRINCIPAL: COMUNIDADE SAÚDE RCS -->
+  <text x="600" y="295" text-anchor="middle" class="title-font" font-size="56" font-weight="700" fill="#ffffff" letter-spacing="-0.5">
+    Comunidade Saúde RCS
   </text>
 
-  <!-- Descrição Chamativa -->
-  <text x="100" y="410" class="text" font-size="21" fill="#d2e7e4" opacity="0.92">
-    Matérias organizadas, plano por concurso, simulados, biblioteca oficial e podcasts.
+  <!-- 4. SUBTÍTULO DAS CARREIRAS -->
+  <text x="600" y="355" text-anchor="middle" class="sans-font" font-size="24" font-weight="700" fill="url(#goldGrad)" letter-spacing="2">
+    ENFERMAGEM  •  TÉCNICO DE ENFERMAGEM  •  RADIOLOGIA MÉDICA
   </text>
 
-  <!-- Badges das Áreas de Especialidade -->
-  <g transform="translate(100, 475)">
-    <!-- Badge Enfermagem -->
-    <g transform="translate(0, 0)">
-      <rect width="210" height="52" rx="14" fill="#ffffff" fill-opacity="0.10" stroke="#ffffff" stroke-opacity="0.25" stroke-width="1.2" />
-      <text x="24" y="32" class="text" font-size="16" font-weight="700" fill="#ffffff">👩‍⚕️ Enfermagem</text>
+  <!-- 5. DESCRIÇÃO DE RECURSOS -->
+  <text x="600" y="405" text-anchor="middle" class="sans-font" font-size="19" font-weight="400" fill="#d1fae5" opacity="0.9">
+    Cursos Completos por Edital • Mentorias ao Vivo • Simulados do SUS • Podcasts de Revisão
+  </text>
+
+  <!-- 6. BADGES DE CARACTERÍSTICAS EM CAIXINHAS -->
+  <g transform="translate(600, 470)">
+    <!-- Item 1: Edital & Banca -->
+    <g transform="translate(-360, -22)">
+      <rect width="220" height="46" rx="14" fill="#ffffff" fill-opacity="0.08" stroke="#10b981" stroke-opacity="0.3" stroke-width="1.2" />
+      <text x="110" y="28" text-anchor="middle" class="sans-font" font-size="14" font-weight="700" fill="#ffffff">
+        🎯 Plano por Edital
+      </text>
     </g>
 
-    <!-- Badge Técnico de Enfermagem -->
-    <g transform="translate(230, 0)">
-      <rect width="270" height="52" rx="14" fill="#ffffff" fill-opacity="0.10" stroke="#ffffff" stroke-opacity="0.25" stroke-width="1.2" />
-      <text x="24" y="32" class="text" font-size="16" font-weight="700" fill="#ffffff">🩺 Técnico de Enfermagem</text>
+    <!-- Item 2: Mentorias -->
+    <g transform="translate(-115, -22)">
+      <rect width="230" height="46" rx="14" fill="#ffffff" fill-opacity="0.08" stroke="#10b981" stroke-opacity="0.3" stroke-width="1.2" />
+      <text x="115" y="28" text-anchor="middle" class="sans-font" font-size="14" font-weight="700" fill="#ffffff">
+        👥 Mentorias ao Vivo
+      </text>
     </g>
 
-    <!-- Badge Radiologia -->
-    <g transform="translate(520, 0)">
-      <rect width="230" height="52" rx="14" fill="#ffffff" fill-opacity="0.10" stroke="#ffffff" stroke-opacity="0.25" stroke-width="1.2" />
-      <text x="24" y="32" class="text" font-size="16" font-weight="700" fill="#ffffff">☢️ Radiologia Médica</text>
-    </g>
-
-    <!-- Badge Podcasts -->
-    <g transform="translate(770, 0)">
-      <rect width="210" height="52" rx="14" fill="#0ca8ad" fill-opacity="0.3" stroke="#59d1c7" stroke-width="1.5" />
-      <text x="24" y="32" class="text" font-size="16" font-weight="700" fill="#59d1c7">🎧 Novo: Podcasts</text>
+    <!-- Item 3: Comunidade -->
+    <g transform="translate(145, -22)">
+      <rect width="220" height="46" rx="14" fill="#ffffff" fill-opacity="0.08" stroke="#10b981" stroke-opacity="0.3" stroke-width="1.2" />
+      <text x="110" y="28" text-anchor="middle" class="sans-font" font-size="14" font-weight="700" fill="#ffffff">
+        💬 Comunidade Ativa
+      </text>
     </g>
   </g>
 
-  <!-- Linha de base / Domínio -->
-  <g transform="translate(100, 575)">
-    <circle cx="6" cy="-5" r="4" fill="#59d1c7" />
-    <text x="20" y="0" class="text" font-size="15" font-weight="600" fill="#a6c0bf" letter-spacing="1">
-      rcscomunidadesaude.vercel.app · Plataforma Exclusiva de Ensino
+  <!-- 7. RODAPÉ COM DOMÍNIO E SELO OFICIAL -->
+  <g transform="translate(600, 560)">
+    <text x="0" y="0" text-anchor="middle" class="sans-font" font-size="14" font-weight="600" fill="#6ee7b7" opacity="0.95" letter-spacing="1">
+      comunidadercssaude.vercel.app  •  Acesso Oficial
     </text>
   </g>
 </svg>
