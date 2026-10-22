@@ -115,6 +115,9 @@ export default async function PodcastsPage({
               item.audioUrl.endsWith(".mp3") ||
               item.audioUrl.endsWith(".wav") ||
               item.audioUrl.endsWith(".ogg") ||
+              item.audioUrl.endsWith(".m4a") ||
+              item.audioUrl.includes("/audios/") ||
+              item.audioUrl.includes("community-uploads") ||
               item.audioUrl.includes("audio");
 
             return (

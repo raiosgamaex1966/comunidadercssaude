@@ -4,6 +4,7 @@ import { useState } from "react";
 import { PlusCircle, Image as ImageIcon, X, Send, Sparkles } from "lucide-react";
 import { Avatar } from "@/components/Shell";
 import { createPost } from "@/lib/actions";
+import { FileUploadInput } from "@/components/FileUploadInput";
 
 export function CreatePostModal({
   user,
@@ -156,14 +157,14 @@ export function CreatePostModal({
                     className="flex items-center gap-1.5 text-xs font-semibold text-muted-foreground hover:text-primary transition"
                   >
                     <ImageIcon className="h-4 w-4" />
-                    <span>Adicionar imagem via link (opcional)</span>
+                    <span>Adicionar imagem (link ou arquivo do PC/Celular)</span>
                   </button>
                 ) : (
                   <div className="space-y-2 rounded-2xl border border-border/80 bg-muted/30 p-3">
                     <div className="flex items-center justify-between">
                       <label className="text-[11px] font-bold uppercase tracking-wider text-muted-foreground flex items-center gap-1.5">
                         <ImageIcon className="h-3.5 w-3.5 text-primary" />
-                        URL da Imagem
+                        Imagem da publicação
                       </label>
                       <button
                         type="button"
@@ -176,26 +177,15 @@ export function CreatePostModal({
                         Remover
                       </button>
                     </div>
-                    <input
-                      type="url"
-                      value={imageUrl}
-                      onChange={(e) => setImageUrl(e.target.value)}
-                      placeholder="https://exemplo.com/imagem.png"
-                      className="w-full rounded-xl border border-border bg-background px-3 py-2 text-xs text-foreground outline-none focus:border-primary transition"
+                    <FileUploadInput
+                      name="imageUrl"
+                      defaultValue={imageUrl}
+                      folder="images"
+                      accept="image/*"
+                      placeholder="Cole o link ou selecione foto do PC/Celular"
+                      buttonText="Escolher foto"
+                      onUploadComplete={(url) => setImageUrl(url)}
                     />
-                    {imageUrl.startsWith("https://") && (
-                      <div className="mt-2 relative rounded-xl overflow-hidden border border-border max-h-40">
-                        {/* eslint-disable-next-line @next/next/no-img-element */}
-                        <img
-                          src={imageUrl}
-                          alt="Prévia da imagem"
-                          className="w-full h-40 object-cover"
-                          onError={(e) => {
-                            (e.target as HTMLElement).style.display = "none";
-                          }}
-                        />
-                      </div>
-                    )}
                   </div>
                 )}
               </div>

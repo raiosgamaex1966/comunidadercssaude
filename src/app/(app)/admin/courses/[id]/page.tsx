@@ -6,6 +6,7 @@ import { db } from "@/db";
 import { courses, lessons, modules, trails } from "@/db/schema";
 import { deleteCourse, deleteLesson, deleteModule, saveCourse, saveLesson, saveModule } from "@/lib/admin-actions";
 import { CourseForm } from "../CourseForm";
+import { FileUploadInput } from "@/components/FileUploadInput";
 
 export default async function AdminCourseDetail({ params }: { params: Promise<{ id: string }> }) {
   const id = Number((await params).id);
@@ -36,7 +37,15 @@ export default async function AdminCourseDetail({ params }: { params: Promise<{ 
                       <form action={saveLesson} className="mt-2 grid gap-2 rounded-xl bg-muted p-3 sm:grid-cols-2">
                         <input type="hidden" name="id" value={l.id} /><input type="hidden" name="courseId" value={id} /><input type="hidden" name="moduleId" value={m.id} />
                         <input name="title" defaultValue={l.title} className="input h-9 sm:col-span-2" required />
-                        <input name="videoUrl" defaultValue={l.videoUrl ?? ""} placeholder="URL embed do vídeo" className="input h-9 sm:col-span-2" />
+                        <FileUploadInput
+                          name="videoUrl"
+                          defaultValue={l.videoUrl ?? ""}
+                          folder="videos"
+                          accept="video/*,.mp4,.webm,.mov,.m4v"
+                          placeholder="URL do YouTube/Vimeo ou suba vídeo .mp4/.webm do PC"
+                          buttonText="Subir vídeo"
+                          className="sm:col-span-2"
+                        />
                         <input name="durationMin" type="number" defaultValue={l.durationMin} placeholder="Minutos" className="input h-9" />
                         <input name="position" type="number" defaultValue={l.position} placeholder="Ordem" className="input h-9" />
                         <textarea name="description" defaultValue={l.description ?? ""} rows={2} placeholder="Descrição" className="input sm:col-span-2" />
@@ -46,12 +55,21 @@ export default async function AdminCourseDetail({ params }: { params: Promise<{ 
                   </li>
                 ))}
               </ul>
-              <form action={saveLesson} className="grid gap-2 sm:grid-cols-[1fr_1fr_80px_auto]">
+              <form action={saveLesson} className="mt-3 space-y-2 rounded-xl border border-dashed border-border bg-muted/20 p-3">
+                <p className="text-xs font-bold text-muted-foreground">+ Adicionar nova aula a este módulo</p>
                 <input type="hidden" name="courseId" value={id} /><input type="hidden" name="moduleId" value={m.id} />
-                <input name="title" placeholder="Nova aula" className="input h-9" required />
-                <input name="videoUrl" placeholder="URL embed (YouTube/Vimeo)" className="input h-9" />
-                <input name="durationMin" type="number" placeholder="min" className="input h-9" />
-                <button className="btn-outline h-9">Adicionar</button>
+                <div className="grid gap-2 sm:grid-cols-[1fr_110px]">
+                  <input name="title" placeholder="Título da nova aula" className="input h-9" required />
+                  <input name="durationMin" type="number" placeholder="Duração (min)" className="input h-9" />
+                </div>
+                <FileUploadInput
+                  name="videoUrl"
+                  folder="videos"
+                  accept="video/*,.mp4,.webm,.mov,.m4v"
+                  placeholder="Cole link (YouTube/Vimeo) ou suba vídeo .mp4 do computador"
+                  buttonText="Subir vídeo do PC"
+                />
+                <button className="btn-outline h-9">Adicionar aula</button>
               </form>
             </div>
           ))}

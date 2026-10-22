@@ -4,6 +4,7 @@ import { db } from "@/db";
 import { materials } from "@/db/schema";
 import { deleteMaterial, saveMaterial } from "@/lib/admin-actions";
 import { PageHero } from "@/components/PageHero";
+import { FileUploadInput } from "@/components/FileUploadInput";
 
 export default async function AdminMaterials() {
   const list = await db.select().from(materials).orderBy(desc(materials.createdAt));
@@ -14,7 +15,15 @@ export default async function AdminMaterials() {
       <input name="description" defaultValue={m?.description ?? ""} placeholder="Descrição" className="input h-9 sm:col-span-2" />
       <input name="category" defaultValue={m?.category ?? ""} placeholder="Categoria (Evidências, Segurança…)" className="input h-9" />
       <select name="kind" defaultValue={m?.kind ?? "link"} className="input h-9"><option value="link">Link</option><option value="file">Arquivo</option><option value="video">Vídeo</option></select>
-      <input name="url" defaultValue={m?.url ?? ""} placeholder="URL" className="input h-9 sm:col-span-2" />
+      <FileUploadInput
+        name="url"
+        defaultValue={m?.url ?? ""}
+        folder="materials"
+        accept=".pdf,.doc,.docx,.xls,.xlsx,.ppt,.pptx,.zip,.mp4,.png,.jpg,.jpeg"
+        placeholder="Cole o link ou suba apostila/PDF/vídeo do computador"
+        buttonText="Escolher arquivo do PC"
+        className="sm:col-span-2"
+      />
       <label className="flex items-center gap-2 text-sm"><input type="checkbox" name="included" defaultChecked={m?.included ?? true} /> Incluído na assinatura</label>
       <input name="price" defaultValue={m?.price ?? ""} placeholder="Preço (se à venda)" className="input h-9" />
       <div className="flex gap-2 sm:col-span-2"><button className="btn-primary h-9">{m ? "Salvar" : "Publicar material"}</button>{m && <button formAction={deleteMaterial.bind(null, m.id)} className="btn-ghost h-9 text-destructive"><Trash2 className="h-4 w-4" /></button>}</div>

@@ -4,6 +4,7 @@ import { db } from "@/db";
 import { news } from "@/db/schema";
 import { deleteNews, saveNews } from "@/lib/admin-actions";
 import { PageHero } from "@/components/PageHero";
+import { FileUploadInput } from "@/components/FileUploadInput";
 
 export default async function AdminNews() {
   const list = await db.select().from(news).orderBy(desc(news.createdAt));
@@ -12,11 +13,28 @@ export default async function AdminNews() {
       {n && <input type="hidden" name="id" value={n.id} />}
       <input name="title" defaultValue={n?.title} placeholder="Título" className="input h-9" required />
       <textarea name="content" defaultValue={n?.content} rows={5} placeholder="Conteúdo (parágrafos separados por linha em branco)" className="input" />
-      <div className="grid grid-cols-2 gap-2">
+      <div>
+        <label className="label">Tipo de publicação</label>
         <select name="kind" defaultValue={n?.kind ?? "article"} className="input h-9"><option value="article">Artigo</option><option value="short">Vídeo curto</option></select>
-        <input name="videoUrl" defaultValue={n?.videoUrl ?? ""} placeholder="URL embed do vídeo" className="input h-9" />
       </div>
-      <input name="coverUrl" defaultValue={n?.coverUrl ?? ""} placeholder="Capa (URL)" className="input h-9" />
+      <FileUploadInput
+        name="videoUrl"
+        defaultValue={n?.videoUrl ?? ""}
+        folder="videos"
+        accept="video/*,.mp4,.webm,.mov,.m4v"
+        label="Vídeo (para Shorts ou matérias em vídeo)"
+        placeholder="URL do YouTube ou suba vídeo .mp4 do PC"
+        buttonText="Subir vídeo"
+      />
+      <FileUploadInput
+        name="coverUrl"
+        defaultValue={n?.coverUrl ?? ""}
+        folder="images"
+        accept="image/*"
+        label="Capa da notícia (opcional)"
+        placeholder="URL da capa ou suba imagem do PC"
+        buttonText="Escolher imagem"
+      />
       <div className="flex gap-2"><button className="btn-primary h-9">{n ? "Salvar" : "Publicar"}</button>{n && <button formAction={deleteNews.bind(null, n.id)} className="btn-ghost h-9 text-destructive"><Trash2 className="h-4 w-4" /></button>}</div>
     </form>
   );

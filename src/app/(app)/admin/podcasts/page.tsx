@@ -4,6 +4,7 @@ import { db } from "@/db";
 import { courses, podcasts } from "@/db/schema";
 import { deletePodcast, savePodcast } from "@/lib/admin-actions";
 import { PageHero } from "@/components/PageHero";
+import { FileUploadInput } from "@/components/FileUploadInput";
 
 export default async function AdminPodcasts() {
   const [list, courseList] = await Promise.all([
@@ -27,11 +28,14 @@ export default async function AdminPodcasts() {
         placeholder="Descrição / Tópicos abordados"
         className="input h-9 sm:col-span-2"
       />
-      <input
+      <FileUploadInput
         name="audioUrl"
-        defaultValue={p?.audioUrl}
-        placeholder="URL do Áudio (MP3, Spotify embed, Anchor, Drive...)"
-        className="input h-9 sm:col-span-2"
+        defaultValue={p?.audioUrl ?? ""}
+        folder="audios"
+        accept="audio/*,.mp3,.wav,.m4a,.aac,.ogg"
+        placeholder="URL do Áudio ou suba arquivo .mp3 do computador"
+        buttonText="Escolher áudio do PC"
+        className="sm:col-span-2"
         required
       />
       <input
@@ -55,11 +59,14 @@ export default async function AdminPodcasts() {
         placeholder="Duração (minutos)"
         className="input h-9"
       />
-      <input
+      <FileUploadInput
         name="coverUrl"
         defaultValue={p?.coverUrl ?? ""}
-        placeholder="URL da Imagem de Capa (opcional)"
-        className="input h-9"
+        folder="images"
+        accept="image/*"
+        placeholder="URL da Imagem de Capa ou suba imagem do PC"
+        buttonText="Escolher capa"
+        className="sm:col-span-2"
       />
       <div className="flex gap-2 sm:col-span-2 mt-2">
         <button className="btn-primary h-9">

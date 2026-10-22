@@ -11,6 +11,7 @@ import { addLessonComment, enrollAction, toggleLessonComplete, toggleSaved } fro
 import { Avatar } from "@/components/Shell";
 import { cn, timeAgo } from "@/lib/utils";
 import { DownloadButton } from "./DownloadButton";
+import { parseVideoSource } from "@/lib/video-utils";
 
 export default async function CoursePage({ params, searchParams }: { params: Promise<{ slug: string }>; searchParams: Promise<{ aula?: string }> }) {
   const user = await requireUser();
@@ -46,18 +47,48 @@ export default async function CoursePage({ params, searchParams }: { params: Pro
 
       <div className="grid gap-6 lg:grid-cols-[1fr_360px]">
         <div className="min-w-0">
-          <div className={`aspect-video overflow-hidden rounded-2xl border border-border ${current?.videoUrl && !soon ? "bg-black" : "bg-muted"}`}>
-            {soon || !current?.videoUrl ? (
-              <div className="glow flex h-full flex-col items-center justify-center gap-3 px-6 text-center text-foreground">
-                {soon ? <Lock className="h-9 w-9 text-primary" /> : <BookOpen className="h-9 w-9 text-primary" />}
-                <p className="font-serif text-xl sm:text-2xl">{soon ? "Conteúdo em preparação" : "Guia de estudo do tópico"}</p>
-                <p className="max-w-lg text-sm leading-relaxed text-muted-foreground">{soon ? "Esta formação está em desenvolvimento. Novos tópicos serão adicionados em breve." : current?.description || "Explore o tema, consulte as referências disponíveis e registre suas reflexões nas anotações."}</p>
-                {!soon && <span className="badge mt-1 border-primary/40 text-primary">Leitura orientada · {current?.durationMin ?? 10} min</span>}
+          {(() => {
+            const videoSource = parseVideoSource(current?.videoUrl);
+            return (
+              <div className={`aspect-video overflow-hidden rounded-2xl border border-border ${videoSource && !soon ? "bg-black" : "bg-muted"}`}>
+                {soon || !videoSource ? (
+                  <div className="glow flex h-full flex-col items-center justify-center gap-3 px-6 text-center text-foreground">
+                    {soon ? <Lock className="h-9 w-9 text-primary" /> : <BookOpen className="h-9 w-9 text-primary" />}
+                    <p className="font-serif text-xl sm:text-2xl">{soon ? "Conteúdo em preparação" : "Guia de estudo do tópico"}</p>
+                    <p className="max-w-lg text-sm leading-relaxed text-muted-foreground">{soon ? "Esta formação está em desenvolvimento. Novos tópicos serão adicionados em breve." : current?.description || "Explore o tema, consulte as referências disponíveis e registre suas reflexões nas anotações."}</p>
+                    {!soon && <span className="badge mt-1 border-primary/40 text-primary">Leitura orientada · {current?.durationMin ?? 10} min</span>}
+                  </div>
+                ) : videoSource.type === "direct" ? (
+                  <video
+                    key={current.id}
+                    src={videoSource.url}
+                    controls
+                    controlsList="nodownload"
+                    playsInline
+                    className="h-full w-full object-contain bg-black"
+                  />
+                ) : videoSource.type === "youtube" || videoSource.type === "vimeo" ? (
+                  <iframe
+                    key={current.id}
+                    src={videoSource.embedUrl}
+                    title={current.title}
+                    className="h-full w-full"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowFullScreen
+                  />
+                ) : (
+                  <iframe
+                    key={current.id}
+                    src={videoSource.url}
+                    title={current.title}
+                    className="h-full w-full"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowFullScreen
+                  />
+                )}
               </div>
-            ) : (
-              <iframe key={current.id} src={current.videoUrl} title={current.title} className="h-full w-full" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen />
-            )}
-          </div>
+            );
+          })()}
 
           <div className="mt-4 flex flex-wrap items-start justify-between gap-3">
             <div>

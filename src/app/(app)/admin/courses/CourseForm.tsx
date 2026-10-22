@@ -1,4 +1,5 @@
 import { AREAS, PROFESSIONS, SPHERES } from "@/lib/concursos";
+import { FileUploadInput } from "@/components/FileUploadInput";
 
 type Trail = { id: number; title: string };
 type Course = { id: number; title: string; description: string | null; coverUrl: string | null; level: string; status: string; trailId: number | null; position: number; instructor: string | null; area: string; profession: string | null; sphere: string | null };
@@ -9,7 +10,15 @@ export function CourseForm({ trails, course, action }: { trails: Trail[]; course
       {course && <input type="hidden" name="id" value={course.id} />}
       <div><label className="label">Título</label><input name="title" defaultValue={course?.title} className="input h-9" required /></div>
       <div><label className="label">Descrição</label><textarea name="description" defaultValue={course?.description ?? ""} rows={3} className="input" /></div>
-      <div><label className="label">Capa (URL)</label><input name="coverUrl" defaultValue={course?.coverUrl ?? ""} className="input h-9" placeholder="/images/course-1.jpg" /></div>
+      <FileUploadInput
+        name="coverUrl"
+        defaultValue={course?.coverUrl ?? ""}
+        folder="images"
+        accept="image/*"
+        label="Capa do curso"
+        placeholder="/images/course-1.jpg ou suba do computador"
+        buttonText="Escolher imagem"
+      />
       <div className="grid grid-cols-2 gap-2">
         <div><label className="label">Nível</label><select name="level" defaultValue={course?.level ?? "Iniciante"} className="input h-9">{["Iniciante", "Intermediário", "Avançado"].map((l) => <option key={l}>{l}</option>)}</select></div>
         <div><label className="label">Estado</label><select name="status" defaultValue={course?.status ?? "published"} className="input h-9"><option value="published">Publicado</option><option value="coming_soon">Em breve</option><option value="draft">Rascunho</option></select></div>
