@@ -10,7 +10,6 @@ import { getHealthcareGuide } from "@/lib/healthcare-guides";
 import { addLessonComment, enrollAction, toggleLessonComplete, toggleSaved } from "@/lib/actions";
 import { Avatar } from "@/components/Shell";
 import { cn, timeAgo } from "@/lib/utils";
-import { DownloadButton } from "./DownloadButton";
 import { parseVideoSource } from "@/lib/video-utils";
 
 export default async function CoursePage({ params, searchParams }: { params: Promise<{ slug: string }>; searchParams: Promise<{ aula?: string }> }) {
@@ -103,7 +102,6 @@ export default async function CoursePage({ params, searchParams }: { params: Pro
                     <Bookmark className={cn("h-4 w-4", saved.length > 0 && "fill-primary text-primary")} /> {saved.length ? "Salvo" : "Salvar"}
                   </button>
                 </form>
-                {current.videoUrl && <DownloadButton lessonId={current.id} title={current.title} course={course.title} slug={slug} />}
                 {enrolled ? (
                   <form action={toggleLessonComplete.bind(null, current.id, slug)}>
                     <button className={cn(current.completed ? "btn-outline" : "btn-primary")}>

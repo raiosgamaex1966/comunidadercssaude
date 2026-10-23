@@ -25,7 +25,6 @@ const NAV = [
   { to: "/my-learning", label: "Minha jornada", icon: GraduationCap, group: "Aprender e compartilhar" },
   { to: "/saved", label: "Salvos", icon: Bookmark, group: "Sua comunidade" },
   { to: "/anotacoes", label: "Anotações", icon: NotebookPen, group: "Aprender e compartilhar" },
-  { to: "/downloads", label: "Aulas baixadas", icon: Download, group: "Aprender e compartilhar" },
   { to: "/settings", label: "Configurações", icon: Settings, group: "Conta" },
   { to: "/support", label: "Suporte", icon: LifeBuoy, group: "Conta" },
 ];
