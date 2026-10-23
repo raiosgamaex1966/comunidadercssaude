@@ -38,14 +38,14 @@ export function Logo({
       <span className="min-w-0 leading-tight">
         <span
           className={`block truncate font-serif text-[17px] font-bold ${
-            light ? "text-white" : "text-[#0d281e]"
+            light ? "text-white" : "text-[#0d281e] dark:text-[#f0fdf4]"
           }`}
         >
-          Comunidade Saúde RCS
+          RCS Prime Cursos
         </span>
         <span
           className={`block text-[10px] font-bold uppercase tracking-[0.18em] ${
-            light ? "text-emerald-400" : "text-[#0a8352]"
+            light ? "text-emerald-400" : "text-[#0a8352] dark:text-[#59d1c7]"
           }`}
         >
           Concursos da saúde

@@ -92,9 +92,9 @@
     </text>
   </g>
 
-  <!-- 3. TÍTULO PRINCIPAL: COMUNIDADE SAÚDE RCS -->
-  <text x="600" y="295" text-anchor="middle" class="title-font" font-size="56" font-weight="700" fill="#ffffff" letter-spacing="-0.5">
-    Comunidade Saúde RCS
+  <!-- 3. TÍTULO PRINCIPAL: RCS PRIME CURSOS -->
+  <text x="600" y="295" text-anchor="middle" class="title-font" font-size="58" font-weight="700" fill="#ffffff" letter-spacing="-0.5">
+    RCS Prime Cursos
   </text>
 
   <!-- 4. SUBTÍTULO DAS CARREIRAS -->

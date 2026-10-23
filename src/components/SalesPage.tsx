@@ -111,7 +111,7 @@ export function SalesPage() {
       {/* Topo / Navbar */}
       <header className="sticky top-0 z-50 border-b border-[#d4e4dc] bg-[#f3f7f5]/95 backdrop-blur-md">
         <div className="mx-auto flex h-18 max-w-7xl items-center justify-between gap-4 px-4 sm:px-8">
-          <Link href="/" aria-label="Comunidade Saúde RCS" className="shrink-0">
+          <Link href="/" aria-label="RCS Prime Cursos" className="shrink-0">
             <Logo size={36} />
           </Link>
 
@@ -157,7 +157,7 @@ export function SalesPage() {
             </h1>
 
             <p className="max-w-2xl text-base sm:text-lg leading-relaxed text-[#4b6659]">
-              A <strong>Comunidade Saúde RCS</strong> reúne em um único ambiente tudo o que você precisa para ser aprovado: cursos por área, planos de estudo customizados para o seu edital, mentorias ao vivo, simulados e uma comunidade colaborativa.
+              O <strong>RCS Prime Cursos</strong> reúne em um único ambiente tudo o que você precisa para ser aprovado: cursos por área, planos de estudo customizados para o seu edital, mentorias ao vivo, simulados e uma comunidade colaborativa.
             </p>
 
             <div className="flex flex-wrap items-center gap-3 pt-2">
@@ -220,7 +220,7 @@ export function SalesPage() {
                       RCS
                     </div>
                     <div>
-                      <p className="text-xs font-bold leading-tight">Comunidade Saúde RCS</p>
+                      <p className="text-xs font-bold leading-tight">RCS Prime Cursos</p>
                       <p className="text-[9px] text-white/60">Ambiente do Concurseiro</p>
                     </div>
                   </div>
@@ -302,7 +302,7 @@ export function SalesPage() {
               Construído para a realidade dos concursos da saúde
             </h2>
             <p className="text-sm sm:text-base text-[#4b6659] leading-relaxed">
-              Diga adeus a pastas desorganizadas e materiais espalhados. A Comunidade Saúde RCS reúne conteúdo estruturado, metodologia de fixação e tecnologia para acelerar sua aprovação.
+              Diga adeus a pastas desorganizadas e materiais espalhados. O RCS Prime Cursos reúne conteúdo estruturado, metodologia de fixação e tecnologia para acelerar sua aprovação.
             </p>
           </div>
 
@@ -348,7 +348,7 @@ export function SalesPage() {
                 Matérias organizadas de acordo com seu edital.
               </h2>
               <p className="text-sm sm:text-base text-white/75 leading-relaxed">
-                Cada concurso tem suas peculiaridades. Na Comunidade Saúde RCS você encontra matérias divididas estrategicamente entre a base comum, a legislação aplicável e os tópicos técnicos de cada especialidade.
+                Cada concurso tem suas peculiaridades. No RCS Prime Cursos você encontra matérias divididas estrategicamente entre a base comum, a legislação aplicável e os tópicos técnicos de cada especialidade.
               </p>
 
               <div className="pt-2">
@@ -443,7 +443,7 @@ export function SalesPage() {
           </h2>
 
           <p className="max-w-xl mx-auto text-sm sm:text-base text-white/80 leading-relaxed">
-            Entre agora mesmo na Comunidade Saúde RCS e tenha acesso completo aos cursos, mentorias, simulados e ao planejador de estudos por edital.
+            Entre agora mesmo no RCS Prime Cursos e tenha acesso completo aos cursos, mentorias, simulados e ao planejador de estudos por edital.
           </p>
 
           <div className="pt-2">
@@ -462,7 +462,7 @@ export function SalesPage() {
       <footer className="border-t border-[#d4e4dc] bg-white py-8">
         <div className="mx-auto max-w-7xl px-4 sm:px-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-[#556d62]">
           <Logo size={28} />
-          <p>© {new Date().getFullYear()} Comunidade Saúde RCS — Todos os direitos reservados.</p>
+          <p>© {new Date().getFullYear()} RCS Prime Cursos — Todos os direitos reservados.</p>
           <div className="flex gap-4">
             <Link href="/auth" className="hover:text-[#0a8352] font-semibold">
               Área do Aluno

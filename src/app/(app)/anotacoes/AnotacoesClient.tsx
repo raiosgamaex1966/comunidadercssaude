@@ -64,12 +64,12 @@ export function AnotacoesClient({
   const [movingNote, setMovingNote] = useState<{ id: number; currentFolder: string } | null>(null);
   const [isPending, startTransition] = useTransition();
 
-  // Notas da Comunidade Saúde RCS
+  // Notas do RCS Prime Cursos
   const communityMaps = [
     {
       id: "pub-1",
       title: "4 REGRAS SIMPLES - LEGISLAÇÃO SUS",
-      subtitle: "Publicado pela Comunidade Saúde RCS",
+      subtitle: "Publicado pelo RCS Prime Cursos",
       content:
         "Princípios Fundamentais do SUS:\n- Universalidade\n- Integralidade\n- Equidade\n- Descentralização com comando único",
       folder: "SUS",
@@ -78,7 +78,7 @@ export function AnotacoesClient({
     {
       id: "pub-2",
       title: "MNEMÔNICOS DE ENFERMAGEM & CÁLCULO DE MEDICAÇÃO",
-      subtitle: "Publicado pela Comunidade Saúde RCS",
+      subtitle: "Publicado pelo RCS Prime Cursos",
       content:
         "Regra das gotas e microgotas:\n- Gotas/min = Volume / (Tempo em horas x 3)\n- Microgotas/min = Volume / Tempo em horas",
       folder: "Enfermagem",

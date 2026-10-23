@@ -403,7 +403,7 @@ export default async function OverviewPage() {
                 Destaque da semana
               </div>
               <h2 className="font-serif text-2xl sm:text-3xl font-bold tracking-tight text-foreground leading-snug">
-                Comece sua jornada com a Comunidade Saúde hoje
+                Comece sua jornada com o RCS Prime Cursos hoje
               </h2>
               <p className="text-xs sm:text-sm text-muted-foreground leading-relaxed">
                 Cursos completos, mentorias ao vivo, materiais de apoio e uma comunidade ativa para você evoluir diariamente rumo à sua aprovação.
@@ -437,7 +437,7 @@ export default async function OverviewPage() {
                   <Play className="h-6 w-6 fill-white ml-0.5" />
                 </div>
                 <p className="mt-3 font-serif text-sm font-bold text-white drop-shadow">
-                  Comunidade Saúde: Como Estudar pelo Edital
+                  RCS Prime Cursos: Como Estudar pelo Edital
                 </p>
                 <span className="mt-1 text-[10px] font-semibold text-muted-foreground">Assista na plataforma</span>
               </div>

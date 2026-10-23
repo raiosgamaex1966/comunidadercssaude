@@ -135,7 +135,7 @@ export default async function CoursesPage({
                 <p className="text-[10px] text-muted-foreground uppercase tracking-widest">Enfermagem · SUS · Radiologia</p>
               </div>
               <div className="border-t border-primary/30 pt-2 flex justify-between text-[10px] text-primary/80">
-                <span>COMUNIDADE SAÚDE</span>
+                <span>RCS PRIME CURSOS</span>
                 <span>OFICIAL</span>
               </div>
             </div>

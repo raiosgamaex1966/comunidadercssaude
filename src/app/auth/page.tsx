@@ -5,7 +5,7 @@ import { LoginForm } from "./LoginForm";
 import { AuthThemeToggle } from "./AuthTheme";
 
 export const dynamic = "force-dynamic";
-export const metadata = { title: "Entrar — Comunidade Saúde RCS" };
+export const metadata = { title: "Entrar — RCS Prime Cursos" };
 
 export default async function AuthPage() {
   const user = await getCurrentUser();
@@ -20,7 +20,7 @@ export default async function AuthPage() {
             <span className="font-mono text-sm">RCS</span>
           </div>
           <span className="font-serif font-bold text-lg tracking-tight text-foreground">
-            Comunidade Saúde RCS
+            RCS Prime Cursos
           </span>
         </Link>
         <AuthThemeToggle />
@@ -90,7 +90,7 @@ export default async function AuthPage() {
       </div>
 
       <footer className="w-full text-center py-4 text-xs text-muted-foreground">
-        © {new Date().getFullYear()} Comunidade Saúde RCS — Todos os direitos reservados.
+        © {new Date().getFullYear()} RCS Prime Cursos — Todos os direitos reservados.
       </footer>
     </main>
   );

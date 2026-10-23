@@ -427,7 +427,7 @@ export function Shell({ user, unread, notifs, children }: { user: SessionUser; u
                 </p>
                 <ol className="list-decimal pl-4 space-y-1 text-foreground/90">
                   <li>Na barra de endereços do navegador (onde fica o link), clique no ícone de <strong>instalar aplicativo</strong> (um monitorzinho com seta para baixo).</li>
-                  <li>Ou clique no menu de <strong>três pontinhos (⋮)</strong> &gt; <strong>&quot;Instalar Comunidade Saúde RCS&quot;</strong>.</li>
+                  <li>Ou clique no menu de <strong>três pontinhos (⋮)</strong> &gt; <strong>&quot;Instalar RCS Prime Cursos&quot;</strong>.</li>
                   <li>O aplicativo será adicionado à sua barra de tarefas e área de trabalho!</li>
                 </ol>
               </div>
