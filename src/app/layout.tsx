@@ -4,7 +4,7 @@ import "./globals.css";
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://comunidadercssaude.vercel.app"),
-  title: { default: "RCS Prime Cursos — Concursos da Saúde", template: "%s — RCS Prime Cursos" },
+  title: { default: "RCS Prime Cursos — Sua Profissão em Primeiro Lugar", template: "%s — RCS Prime Cursos" },
   description: "Preparação organizada para concursos da saúde: Enfermagem, Técnico de Enfermagem e Radiologia Médica. Matérias por edital, plano individual, comunidade e podcasts.",
   icons: {
     icon: [
@@ -20,7 +20,7 @@ export const metadata: Metadata = {
     title: "RCS Prime Cursos",
   },
   openGraph: {
-    title: "RCS Prime Cursos — Concursos da Saúde",
+    title: "RCS Prime Cursos — Sua Profissão em Primeiro Lugar",
     description: "Preparação organizada para concursos da saúde: Enfermagem, Técnico de Enfermagem e Radiologia Médica. Matérias por edital, plano individual, comunidade e podcasts.",
     url: "https://comunidadercssaude.vercel.app",
     siteName: "RCS Prime Cursos",
@@ -31,13 +31,13 @@ export const metadata: Metadata = {
         url: "https://comunidadercssaude.vercel.app/og-image.png?v=2",
         width: 1200,
         height: 630,
-        alt: "RCS Prime Cursos — Concursos da Saúde",
+        alt: "RCS Prime Cursos — Sua Profissão em Primeiro Lugar",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "RCS Prime Cursos — Concursos da Saúde",
+    title: "RCS Prime Cursos — Sua Profissão em Primeiro Lugar",
     description: "Preparação organizada para concursos da saúde: Enfermagem, Técnico de Enfermagem e Radiologia Médica. Matérias por edital, plano individual, comunidade e podcasts.",
     images: ["https://comunidadercssaude.vercel.app/og-image.png?v=2"],
   },

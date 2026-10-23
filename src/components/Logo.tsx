@@ -44,11 +44,11 @@ export function Logo({
           RCS Prime Cursos
         </span>
         <span
-          className={`block text-[10px] font-bold uppercase tracking-[0.18em] ${
+          className={`block whitespace-nowrap text-[9px] font-bold uppercase tracking-[0.08em] ${
             light ? "text-emerald-400" : "text-[#0a8352] dark:text-[#59d1c7]"
           }`}
         >
-          Concursos da saúde
+          Sua Profissão em Primeiro Lugar
         </span>
       </span>
     </span>

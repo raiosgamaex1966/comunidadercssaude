@@ -37,14 +37,14 @@ const squareSvg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 800"
 
   <!-- Nome -->
   <text x="400" y="495" text-anchor="middle" font-family="'DM Serif Display', Georgia, serif" font-size="52" font-weight="700" fill="#ffffff">
-    Comunidade Saúde RCS
+    RCS Prime Cursos
   </text>
 
   <!-- Tag Concursos da Saúde -->
   <g transform="translate(400, 560)">
-    <rect x="-190" y="-20" width="380" height="40" rx="20" fill="#10b981" fill-opacity="0.15" stroke="#10b981" stroke-opacity="0.4" stroke-width="1.5" />
-    <text x="0" y="6" text-anchor="middle" font-family="'DM Sans', system-ui, sans-serif" font-size="15" font-weight="800" fill="#a7f3d0" letter-spacing="3">
-      CONCURSOS DA SAÚDE
+    <rect x="-210" y="-20" width="420" height="40" rx="20" fill="#10b981" fill-opacity="0.15" stroke="#10b981" stroke-opacity="0.4" stroke-width="1.5" />
+    <text x="0" y="6" text-anchor="middle" font-family="'DM Sans', system-ui, sans-serif" font-size="14" font-weight="800" fill="#a7f3d0" letter-spacing="2.5">
+      SUA PROFISSÃO EM PRIMEIRO LUGAR
     </text>
   </g>
 

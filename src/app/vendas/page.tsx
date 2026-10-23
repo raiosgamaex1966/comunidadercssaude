@@ -1,7 +1,7 @@
 import { SalesPage } from "@/components/SalesPage";
 
 export const metadata = {
-  title: "RCS Prime Comunity — Plataforma para concursos da saúde",
+  title: "RCS Prime Cursos — Sua Profissão em Primeiro Lugar",
   description: "Organize matérias, professores convidados e planos de estudo para concursos da saúde.",
 };
 

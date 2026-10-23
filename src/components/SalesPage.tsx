@@ -148,7 +148,7 @@ export function SalesPage() {
           <div className="space-y-6">
             <div className="inline-flex items-center gap-2 rounded-full border border-[#0a8352]/30 bg-[#0a8352]/10 px-3.5 py-1.5 text-xs font-bold uppercase tracking-wider text-[#0a8352]">
               <HeartPulse className="h-4 w-4" />
-              <span>Plataforma para Concursos da Saúde</span>
+              <span>Sua Profissão em Primeiro Lugar</span>
             </div>
 
             <h1 className="font-serif text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight text-[#0d281e] leading-[1.08]">
